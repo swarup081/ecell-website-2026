@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+:root {
+  --blue-accent: #3b82f6;
+}
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-poppins: var(--font-poppins), sans-serif;

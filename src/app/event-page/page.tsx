@@ -57,9 +57,11 @@ export default function EventsPage() {
       <main className="relative z-10 pt-32 pb-20 text-white lg:pt-32">
         <div className="mx-auto w-full px-6 lg:px-[80px]">
           <h1 className="font-poppins mb-16 text-center text-4xl font-normal uppercase sm:text-5xl md:text-6xl lg:mb-24 lg:text-7xl xl:text-[80px]">
-            Our Initiatives
+            Our{" "}
+            <span className="font-bold text-[var(--blue-accent)]">
+              Initiatives
+            </span>
           </h1>
-
           <section className="flex flex-col gap-12 lg:gap-20">
             {events.map((event, index) => (
               <article key={index} className="relative">
@@ -84,10 +86,13 @@ export default function EventsPage() {
                       {event.title}
                     </h2>
 
-                    <p className="font-poppins mb-10 text-sm leading-relaxed font-medium text-white/80 sm:text-base lg:text-lg xl:text-xl">
-                      {event.description}
-                    </p>
-
+                    {event.description.map((paragraph, index) => (
+                      <p
+                        key={index}
+                        className="font-poppins mb-10 text-sm leading-relaxed font-medium text-white/80 sm:text-base lg:text-lg xl:text-xl"
+                        dangerouslySetInnerHTML={{ __html: paragraph }}
+                      />
+                    ))}
                     <div className="mt-auto flex">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
