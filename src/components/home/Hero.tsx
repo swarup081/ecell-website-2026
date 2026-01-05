@@ -14,52 +14,44 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#030014] pt-20"
     >
-      {/* Animated Background - Originating from Bottom */}
+      {/* Animated "Wave" Background - Originating from Bottom (Marquee) */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
-        {/* Base Gradient rising from bottom */}
+
+        {/* Large Central Aurora Wave */}
         <motion.div
-            animate={{ opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-0 left-0 right-0 h-[80vh] bg-gradient-to-t from-purple-900/30 via-indigo-900/10 to-transparent"
+           animate={{
+              y: [20, -20, 20],
+              scale: [1, 1.05, 1],
+              opacity: [0.4, 0.6, 0.4]
+           }}
+           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] bg-gradient-to-t from-purple-800/40 via-purple-600/20 to-transparent blur-[80px] rounded-t-[50%] mix-blend-screen"
         />
 
-        {/* Rising Beam 1 (Left) */}
+        {/* Secondary Wave (Left) */}
         <motion.div
-            animate={{
-                y: [0, -40, 0],
-                opacity: [0.2, 0.5, 0.2],
-                scaleY: [1, 1.1, 1],
-                rotate: [-5, 0, -5]
-            }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-[-20%] left-[10%] w-[40vw] h-[80vh] bg-purple-600/20 blur-[100px] rounded-full mix-blend-screen origin-bottom transform-gpu"
+           animate={{
+              y: [0, -30, 0],
+              x: [0, 20, 0],
+              opacity: [0.2, 0.4, 0.2]
+           }}
+           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+           className="absolute bottom-[-10%] left-[-10%] w-[80vw] h-[50vh] bg-gradient-to-tr from-indigo-800/30 via-blue-700/10 to-transparent blur-[60px] rounded-full mix-blend-screen"
         />
 
-        {/* Rising Beam 2 (Right) */}
+        {/* Secondary Wave (Right) */}
         <motion.div
-            animate={{
-                y: [0, -50, 0],
-                opacity: [0.2, 0.4, 0.2],
-                scaleY: [1, 1.2, 1],
-                rotate: [5, 0, 5]
-            }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[-20%] right-[10%] w-[40vw] h-[90vh] bg-indigo-600/20 blur-[100px] rounded-full mix-blend-screen origin-bottom transform-gpu"
+           animate={{
+              y: [0, -40, 0],
+              x: [0, -20, 0],
+              opacity: [0.2, 0.5, 0.2]
+           }}
+           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+           className="absolute bottom-[-10%] right-[-10%] w-[80vw] h-[55vh] bg-gradient-to-tl from-purple-900/30 via-pink-800/10 to-transparent blur-[60px] rounded-full mix-blend-screen"
         />
 
-        {/* Rising Beam 3 (Center) */}
-        <motion.div
-             animate={{
-                y: [0, -30, 0],
-                opacity: [0.1, 0.3, 0.1],
-                scaleY: [1, 1.15, 1]
-            }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute bottom-[-20%] left-[30%] right-[30%] h-[70vh] bg-blue-600/10 blur-[90px] rounded-full mix-blend-screen origin-bottom transform-gpu"
-        />
-
-        {/* Grid pattern for texture */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        {/* Subtle flowing overlay to simulate "moving like wave" */}
+         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
       </div>
 
       {/* Hero Content */}

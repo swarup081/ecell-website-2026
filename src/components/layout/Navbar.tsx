@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "~/lib/utils";
 
@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/10 group-hover:border-purple-500/50 transition-colors">
-            {/* Logo Placeholder - assuming logo.png is present as per instructions */}
+            {/* Logo Placeholder */}
              <Image
               src="/logo.png"
               alt="E-Cell NIT Silchar"
@@ -63,13 +63,15 @@ const Navbar = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-500 transition-all group-hover:w-full" />
             </Link>
           ))}
+
+          {/* Improved Join Us Button */}
           <Link
             href="/join"
-            className="group relative inline-flex h-9 items-center justify-center overflow-hidden rounded-full bg-white/10 px-6 font-medium text-white transition-all duration-300 hover:bg-white/20 hover:scale-105 active:scale-95 border border-white/10"
+            className="relative px-6 py-2.5 overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] group"
           >
-            <span className="mr-2">Join Us</span>
-            <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/20 to-blue-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-white/20 group-hover:opacity-0 transition-opacity duration-300" />
+            <span className="relative z-10 font-semibold text-sm tracking-wide">Join Us</span>
+            <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-shimmer" />
           </Link>
         </div>
 
@@ -104,7 +106,7 @@ const Navbar = () => {
               ))}
               <Link
                 href="/join"
-                className="mt-4 flex items-center justify-center w-full py-3 rounded-lg bg-purple-600/20 border border-purple-500/50 text-purple-200 font-semibold hover:bg-purple-600/30 transition-colors"
+                className="mt-4 flex items-center justify-center w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:shadow-[0_0_15px_rgba(147,51,234,0.4)] transition-all"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Join Us
