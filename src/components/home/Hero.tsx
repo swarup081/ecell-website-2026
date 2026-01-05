@@ -14,34 +14,56 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#030014] pt-20"
     >
-      {/* Central Spotlight / Glow - Static & Clean */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        {/* Main purple glow behind text */}
-        <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-purple-600/30 blur-[120px] rounded-full mix-blend-screen" />
+      {/* Animated Background - Originating from Bottom */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+        {/* Base Gradient rising from bottom */}
+        <motion.div
+            animate={{ opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-0 left-0 right-0 h-[80vh] bg-gradient-to-t from-purple-900/30 via-indigo-900/10 to-transparent"
+        />
 
-        {/* Secondary blue glow for depth */}
-        <div className="absolute top-[20%] left-[40%] w-[600px] h-[400px] bg-indigo-600/20 blur-[100px] rounded-full mix-blend-screen" />
+        {/* Rising Beam 1 (Left) */}
+        <motion.div
+            animate={{
+                y: [0, -40, 0],
+                opacity: [0.2, 0.5, 0.2],
+                scaleY: [1, 1.1, 1],
+                rotate: [-5, 0, -5]
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-[-20%] left-[10%] w-[40vw] h-[80vh] bg-purple-600/20 blur-[100px] rounded-full mix-blend-screen origin-bottom transform-gpu"
+        />
 
-        {/* Subtle grid pattern for texture */}
+        {/* Rising Beam 2 (Right) */}
+        <motion.div
+            animate={{
+                y: [0, -50, 0],
+                opacity: [0.2, 0.4, 0.2],
+                scaleY: [1, 1.2, 1],
+                rotate: [5, 0, 5]
+            }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[-20%] right-[10%] w-[40vw] h-[90vh] bg-indigo-600/20 blur-[100px] rounded-full mix-blend-screen origin-bottom transform-gpu"
+        />
+
+        {/* Rising Beam 3 (Center) */}
+        <motion.div
+             animate={{
+                y: [0, -30, 0],
+                opacity: [0.1, 0.3, 0.1],
+                scaleY: [1, 1.15, 1]
+            }}
+            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="absolute bottom-[-20%] left-[30%] right-[30%] h-[70vh] bg-blue-600/10 blur-[90px] rounded-full mix-blend-screen origin-bottom transform-gpu"
+        />
+
+        {/* Grid pattern for texture */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
       </div>
 
       {/* Hero Content */}
-      <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center gap-8 mb-20">
-
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-sm text-purple-200 backdrop-blur-sm shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-          </span>
-          Welcome to E-Cell NITS
-        </motion.div>
+      <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center gap-8 mb-20 mt-10">
 
         {/* Headline */}
         <motion.h1
