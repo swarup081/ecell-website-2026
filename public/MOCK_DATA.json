@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "first_name": "Iqbal",
+    "image": "https://png.pngtree.com/thumb_back/fh260/background/20250226/pngtree-a-mysterious-figure-in-the-dark-wearing-hooded-sweatshirt-with-their-image_16970925.jpg",
+    "email": "mdominichetti0@rakuten.co.jp",
+    "gender": "Male",
+    "post": "Web Developer",
+    "age": 20,
+    "country": "India",
+    "facebook_profile": "https://www.facebook.com/john.doe",
+    "twitter_handle": "mograda0",
+    "instagram_handle": "https://www.instagram.com/johndoe",
+    "linkedin_profile": "https://www.linkedin.com/in/johndoe",
+    "github": "https://github.com/johndoe",
+    "about": "I’m a Web Developer with a passion for creating visually compelling and meaningful designs. I specialize in branding, social media creatives, and digital design, focusing on clarity, consistency, and strong visual storytelling. My goal is to turn ideas into designs that connect with people and elevate brands.",
+
+    "All_blogs": [
+      {
+        "id": 1,
+        "title": "Understanding Microservices Architecture",
+        "brief_intro": "A deep dive into how microservices can improve scalability and maintainability in large web applications.",
+        "details": "Microservices architecture is a design approach where applications are built as a collection of small, independent services. Each service runs its own process and communicates via lightweight mechanisms such as HTTP or messaging queues. This approach enables faster development cycles, better scalability, fault isolation, and easier deployment compared to monolithic architectures.",
+        "posted_on": "2024-10-24",
+        "read_time": "5 min read",
+        "category": "Tech",
+        "tags": ["Microservices", "Backend", "Scalability", "System Design"],
+        "likes": 24,
+        "comments": 5,
+        "is_liked": false,
+        "cover_image": "https://d2nzy1qhita6w.cloudfront.net/media/magefan_blog/hidden-boom-in-tech-industry.jpeg"
+      },
+      {
+        "id": 2,
+        "title": "CI/CD Pipelines: Best Practices",
+        "brief_intro": "Learn how to automate your deployment process efficiently using modern CI/CD tools and strategies.",
+        "details": "CI/CD pipelines help teams deliver code changes more frequently and reliably. By integrating automated testing, continuous integration, and continuous deployment, organizations can reduce errors, improve software quality, and accelerate time to market. Tools like GitHub Actions, Jenkins, GitLab CI, and CircleCI play a major role in modern DevOps workflows.",
+        "posted_on": "2024-09-15",
+        "read_time": "8 min read",
+        "category": "DevOps",
+        "tags": ["CI/CD", "DevOps", "Automation", "Deployment"],
+        "likes": 42,
+        "comments": 12,
+        "is_liked": true,
+        "cover_image": "https://testgrid.io/blog/wp-content/uploads/2024/09/devops-testing.jpg"
+      },
+      {
+        "id": 3,
+        "title": "Introduction to Neural Networks",
+        "brief_intro": "A beginner-friendly guide to understanding the basics of neural networks and how they power modern AI.",
+        "details": "Neural networks are a core concept in artificial intelligence and machine learning. Inspired by the human brain, they consist of layers of interconnected neurons that process data. Neural networks are widely used in image recognition, natural language processing, recommendation systems, and more.",
+        "posted_on": "2024-08-02",
+        "read_time": "4 min read",
+        "category": "AI",
+        "tags": ["AI", "Machine Learning", "Neural Networks", "Deep Learning"],
+        "likes": 15,
+        "comments": 3,
+        "is_liked": false,
+        "cover_image": "https://edure.in/wp-content/uploads/2025/02/ai-tools.webp"
+      }
+    ]
+  }
+]
