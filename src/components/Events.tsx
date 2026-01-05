@@ -51,15 +51,15 @@ const events = [
 
 const Events: React.FC = () => {
   return (
-    <section id="events" className="py-40 bg-transparent relative overflow-hidden">
+    <section id="events" className="py-24 md:py-40 bg-transparent relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-6xl font-black text-white uppercase tracking-tighter leading-none">
+            <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
               Events &<br/><span className="text-blue-500">Challenges</span>
             </h2>
           </motion.div>
@@ -73,7 +73,12 @@ const Events: React.FC = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        {/*
+          Horizontal scroll container for mobile
+          snap-x for smooth paging feel
+          overflow-x-auto to enable scroll
+        */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-10 md:overflow-visible md:pb-0 md:px-0 scrollbar-hide">
           {events.map((event, i) => (
             <motion.div
               key={event.id}
@@ -81,9 +86,9 @@ const Events: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="glowing-border group"
+              className="glowing-border group flex-shrink-0 w-[85vw] md:w-auto snap-center mr-6 md:mr-0"
             >
-              <div className="relative h-[620px] rounded-[2.5rem] overflow-hidden bg-[#020617] p-10 flex flex-col shadow-2xl">
+              <div className="relative h-[550px] md:h-[620px] rounded-[2.5rem] overflow-hidden bg-[#020617] p-8 md:p-10 flex flex-col shadow-2xl">
 
                 {/* Background Image Layer */}
                 <div className="absolute inset-0 z-0 opacity-25 group-hover:opacity-10 transition-all duration-700">
@@ -95,29 +100,29 @@ const Events: React.FC = () => {
                 {/* Content Container (z-10) */}
                 <div className="relative z-10 flex flex-col h-full">
 
-                  {/* Top: Icon in Circle Container (Design Ref match) */}
-                  <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-14 shadow-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-500">
-                    <event.icon size={26} className="text-white opacity-80 group-hover:opacity-100 transition-opacity" />
+                  {/* Top: Icon in Circle Container */}
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-10 md:mb-14 shadow-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-500">
+                    <event.icon size={24} className="text-white opacity-80 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  {/* Category Tag (Design Ref match - Pink/Rose) */}
-                  <span className={`text-sm font-black tracking-[0.25em] uppercase bg-gradient-to-r ${event.tagGradient} bg-clip-text text-transparent mb-4 block`}>
+                  {/* Category Tag */}
+                  <span className={`text-xs md:text-sm font-black tracking-[0.25em] uppercase bg-gradient-to-r ${event.tagGradient} bg-clip-text text-transparent mb-4 block`}>
                     {event.category}
                   </span>
 
-                  {/* Title: Big Bold White (Design Ref match) */}
-                  <h3 className="text-5xl font-black text-white mb-2 leading-[0.85] tracking-tighter whitespace-pre-line group-hover:translate-x-1 transition-transform duration-500">
+                  {/* Title */}
+                  <h3 className="text-4xl md:text-5xl font-black text-white mb-2 leading-[0.85] tracking-tighter whitespace-pre-line group-hover:translate-x-1 transition-transform duration-500">
                     {event.title}
                   </h3>
 
-                  {/* Optional Sub-text to fill space if title is short */}
-                  <p className="text-gray-500 text-xs font-bold tracking-widest uppercase mb-auto">
+                  {/* Optional Sub-text */}
+                  <p className="text-gray-500 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-auto">
                     {event.subtitle}
                   </p>
 
-                  {/* Description at bottom (Design Ref match) */}
+                  {/* Description at bottom */}
                   <div className="mt-6">
-                    <p className="text-white/80 text-lg leading-snug font-normal mb-10 group-hover:text-white transition-colors">
+                    <p className="text-white/80 text-base md:text-lg leading-snug font-normal mb-8 md:mb-10 group-hover:text-white transition-colors">
                       {event.desc}
                     </p>
 
