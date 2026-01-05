@@ -14,44 +14,55 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#030014] pt-20"
     >
-      {/* Animated "Wave" Background - Originating from Bottom (Marquee) */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+      {/*
+        BACKGROUND ANIMATION LAYER
+        --------------------------
+        Goal: Vibrant, rising "Aurora/Nebula" glow from the bottom.
+        Must be clearly visible and animated.
+      */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
 
-        {/* Large Central Aurora Wave */}
+        {/*
+          Layer 1: Deep ambient base glow (Static)
+          Provides the purple hue foundation at the bottom.
+        */}
+        <div className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-purple-900 via-indigo-950 to-transparent opacity-80" />
+
+        {/*
+          Layer 2: The Rising Aurora (Animated)
+          Bright, vibrant gradient that moves up and down.
+        */}
         <motion.div
            animate={{
-              y: [20, -20, 20],
-              scale: [1, 1.05, 1],
-              opacity: [0.4, 0.6, 0.4]
+              height: ["30vh", "60vh", "30vh"], // Significant vertical movement
+              opacity: [0.6, 1, 0.6],           // Pulsing brightness
            }}
-           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] bg-gradient-to-t from-purple-800/40 via-purple-600/20 to-transparent blur-[80px] rounded-t-[50%] mix-blend-screen"
+           transition={{
+             duration: 8,
+             repeat: Infinity,
+             ease: "easeInOut"
+           }}
+           style={{ transformOrigin: "bottom" }}
+           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100vw] max-w-[1200px] bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-fuchsia-600/60 via-purple-600/40 to-transparent blur-[80px]"
         />
 
-        {/* Secondary Wave (Left) */}
+        {/*
+          Layer 3: Secondary "Breathing" Glows (Side Anchors)
+          Adds width and variation.
+        */}
         <motion.div
-           animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              opacity: [0.2, 0.4, 0.2]
-           }}
-           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-           className="absolute bottom-[-10%] left-[-10%] w-[80vw] h-[50vh] bg-gradient-to-tr from-indigo-800/30 via-blue-700/10 to-transparent blur-[60px] rounded-full mix-blend-screen"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+          className="absolute bottom-0 left-0 w-1/2 h-[50vh] bg-gradient-to-tr from-indigo-600/30 to-transparent blur-[100px]"
         />
-
-        {/* Secondary Wave (Right) */}
         <motion.div
-           animate={{
-              y: [0, -40, 0],
-              x: [0, -20, 0],
-              opacity: [0.2, 0.5, 0.2]
-           }}
-           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-           className="absolute bottom-[-10%] right-[-10%] w-[80vw] h-[55vh] bg-gradient-to-tl from-purple-900/30 via-pink-800/10 to-transparent blur-[60px] rounded-full mix-blend-screen"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+          className="absolute bottom-0 right-0 w-1/2 h-[50vh] bg-gradient-to-tl from-purple-600/30 to-transparent blur-[100px]"
         />
 
-        {/* Subtle flowing overlay to simulate "moving like wave" */}
-         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
+        {/* Grid Overlay - lighter now to not obscure the glow */}
+         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
       </div>
 
       {/* Hero Content */}
@@ -109,25 +120,20 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Marquee Section with "Glow Above" */}
+      {/* Marquee Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
         className="w-full relative z-20 mt-auto mb-10"
       >
-        {/* The "Above" Glowing Line Animation */}
-        <div className="w-full max-w-6xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent relative mb-8 opacity-70">
-           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-50 blur-[2px] animate-shimmer-line" />
-           <div className="absolute top-[-2px] left-1/2 -translate-x-1/2 w-1/2 h-[4px] bg-purple-500/50 blur-[10px]" />
+        {/* The "Above" Glowing Line Animation - Crisp & Bright */}
+        <div className="w-full max-w-7xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent relative mb-8">
+           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-70 blur-[2px] animate-shimmer-line" />
         </div>
 
-        {/* Glass Container for Marquee */}
-        <div className="w-full bg-black/30 backdrop-blur-md border-y border-white/5 py-8 relative overflow-hidden group hover:border-purple-500/20 transition-colors duration-500">
-
-           {/* Inner Glow Background for Marquee */}
-           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-
+        {/* Glass Container for Marquee - Transparent to show the glow behind/under it */}
+        <div className="w-full bg-black/10 backdrop-blur-sm border-y border-white/5 py-8 relative overflow-hidden group hover:border-purple-500/30 transition-colors duration-500">
            <Marquee />
         </div>
       </motion.div>
