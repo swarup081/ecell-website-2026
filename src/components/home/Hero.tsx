@@ -13,8 +13,7 @@ const Hero = () => {
 
   // State to manage the animation sequence
   // phase 0: LaserFlow active, Content hidden
-  // phase 1: Content fades in, LaserFlow continues (or moves to background)
-  // phase 2: Plasma activates near Marquee
+  // phase 1: Content fades in, LaserFlow fades out, Plasma fades in
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
@@ -33,10 +32,14 @@ const Hero = () => {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#030014] pt-20"
     >
       {/*
-        LAYER 1: LaserFlow Animation (Background / Intro)
-        Initially the main focus, then stays as background.
+        LAYER 1: LaserFlow Animation (Intro)
+        Fades out when Phase 1 starts.
       */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+      <motion.div
+        animate={{ opacity: phase === 0 ? 1 : 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+      >
          <LaserFlow
             color="#977aff"
             wispDensity={1}
@@ -53,17 +56,39 @@ const Hero = () => {
             verticalBeamOffset={-0.5}
             style={{ width: '100%', height: '100%' }}
           />
-      </div>
+      </motion.div>
+
+      {/*
+        LAYER 2: Plasma Animation (Main Background)
+        Fades in when Phase 1 starts.
+        Covers the full screen (behind text).
+      */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase >= 1 ? 1 : 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+      >
+        <Plasma
+          color="#312e81" // Indigo-900ish
+          speed={0.8}
+          direction="forward"
+          scale={1.3}
+          opacity={0.8}
+          mouseInteractive={false}
+          className="w-full h-full opacity-80"
+        />
+      </motion.div>
 
        {/*
-          Layer 1.5: Previous "Aurora" layers (Optional: can keep them for depth or remove if LaserFlow is enough)
-          Keeping a subtle base gradient for when LaserFlow fades/mixes
+          Layer 1.5: Gradient Overlay
+          Keeps text readable against the animations
         */}
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: phase >= 1 ? 0.3 : 0 }}
            transition={{ duration: 2 }}
-           className="absolute bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-purple-900 via-indigo-950 to-transparent z-[1]"
+           className="absolute bottom-0 left-0 w-full h-[60vh] bg-gradient-to-t from-[#030014] via-indigo-950/20 to-transparent z-[1]"
         />
 
       {/* Hero Content - Revealed in Phase 1 */}
@@ -125,33 +150,14 @@ const Hero = () => {
         )}
       </AnimatePresence>
 
-      {/* Marquee Section with Plasma Background */}
+      {/* Marquee Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : 40 }}
         transition={{ duration: 1, delay: 0.8 }}
         className="w-full relative z-20 mt-auto mb-10"
       >
-        {/*
-          PLASMA LAYER: Positioned relative to Marquee
-          "background effect above the marquee after it"
-          Using absolute positioning to center it behind/around the marquee area.
-        */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[500px] z-[-1] pointer-events-none opacity-60 mix-blend-screen">
-             <Plasma
-                color="#312e81" // Indigo-900ish to match theme
-                speed={0.8}
-                direction="forward"
-                scale={1.3}
-                opacity={1}
-                mouseInteractive={false}
-             />
-        </div>
-
-        {/* The "Above" Glowing Line Animation */}
-        <div className="w-full max-w-7xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent relative mb-8">
-           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-70 blur-[2px] animate-shimmer-line" />
-        </div>
+        {/* Removed the Glowing Line & Plasma from here */}
 
         {/* Glass Container for Marquee */}
         <div className="w-full bg-black/10 backdrop-blur-sm border-y border-white/5 py-8 relative overflow-hidden group hover:border-purple-500/30 transition-colors duration-500">
