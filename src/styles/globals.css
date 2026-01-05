@@ -20,6 +20,14 @@
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
   }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .animate-shimmer-line {
+    animation: shimmer-line 3s linear infinite;
+  }
 }
 
 @keyframes gradient-x {
@@ -39,5 +47,23 @@
   }
   to {
     transform: skew(-12deg) translateX(100%);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes shimmer-line {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
