@@ -1,49 +1,53 @@
-export type Events = {
+import { Compass, Sparkles, Layers, Globe, Rocket } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+export type EventData = {
   title: string;
-  description: string[];
+  description: string;
   image: string;
-  imagePosition: "left" | "right";
+  icon: LucideIcon;
+  reverse?: boolean;
 };
 
-export const events: Events[] = [
+export const events: EventData[] = [
   {
     title: "EnGenius",
+    description:
+      "EnGenius is the official orientation program of E-CELL NIT Silchar, introducing freshers to entrepreneurship, innovation, and leadership. Through interactive sessions, ice-breakers, and startup exposure—along with the Mr. & Ms. EnGenius contest—it helps students showcase creativity, confidence, and leadership while inspiring their journey from ideas to impact. More than just an orientation, Engenius fosters teamwork, curiosity, and problem-solving, inspiring students to take their first step into the entrepreneurial ecosystem and begin their journey from ideas to impact",
     image: "/images/events/orientation.jpeg",
-    description: [
-      `<b class="text-[var(--blue-accent)]">EnGenius</b> is the official orientation program of <b class="text-[var(--blue-accent)]">E-CELL NIT Silchar</b>, designed to introduce freshers to the world of entrepreneurship, innovation, and leadership. Through engaging interactive sessions, ice-breaker activities, and exposure to startup culture, the event helps students understand how ideas are transformed into impactful ventures.</br>Featuring the exciting <i>Mr. & Ms. EnGenius</i> contest, participants get a platform to showcase their creativity, confidence, leadership skills, and entrepreneurial mindset. More than just an orientation, Engenius fosters teamwork, curiosity, and problem-solving, inspiring students to take their first step into the entrepreneurial ecosystem and begin their journey from ideas to impact.`,
-    ],
-    imagePosition: "left",
+    icon: Compass,
+    reverse: false,
   },
   {
     title: "EIC",
+    description:
+      "The Entrepreneurship and Innovation Challenge (EIC) by E-CELL NIT Silchar is a inter-branch competition that brings together students from across the institute to showcase their entrepreneurial thinking, creativity, and innovation. Designed as a platform for healthy competition, EIC creates a dynamic environment for idea exchange and strategic problem-solving. With structured and engaging modules involving all six branches, the challenge fosters collaboration, leadership, and innovation, celebrating interdisciplinary talent while reinforcing E-Cell’s mission to build a strong entrepreneurial culture on campus.",
     image: "/images/events/eic.jpeg",
-    description: [
-      `The <b class="text-[var(--blue-accent)]">Entrepreneurship and Innovation Challenge (EIC)</b> by <b class="text-[var(--blue-accent)]">E-CELL NIT Silchar</b> is a flagship inter-branch competition that brings together students from across the institute to showcase their entrepreneurial thinking, creativity, and innovation. Designed as a platform for healthy competition, EIC sets the stage for a dynamic exchange of ideas as participants compete for the coveted championship title.</br>The challenge unites all six branches in a series of structured and engaging modules, each crafted to test different aspects of entrepreneurship and problem-solving. With four successful modules, the event witnessed enthusiastic participation from every branch, fostering collaboration, strategic thinking, and innovation at scale. EIC stands as a celebration of interdisciplinary talent and competitive spirit, reinforcing E-Cell’s mission to cultivate innovation, leadership, and entrepreneurial excellence across campus.`,
-    ],
-    imagePosition: "right",
+    icon: Sparkles,
+    reverse: true,
   },
   {
     title: "Srijan",
+    description:
+      "The National Innovation and Entrepreneurship Summit of NIT Silchar, Srijan, is the flagship event of E-CELL. Held annually and organised solely by the Entrepreneurship Cell of the college, it tries to inculcate the spirit of entrepreneurship in the young minds. Numerous events and webinars are held whose main motive is to give shape to the innovative ideas that take birth in the creative minds of the participants.",
     image: "/images/events/srijan.png",
-    description: [
-      `The National Innovation and Entrepreneurship Summit of NIT Silchar,<b class="text-[var(--blue-accent)]"> Srijan</b>, is the flagship event of <b class="text-[var(--blue-accent)]">E-CELL</b> . Held annually and organised solely by the Entrepreneurship Cell of the college, it tries to inculcate the spirit of entrepreneurship in the young minds. Numerous events and webinars are held whose main motive is to give shape to the innovative ideas that take birth in the creative minds of the participants. Under the banner of Srijan, several different modules are organised which are briefly explained below`,
-    ],
-    imagePosition: "left",
+    icon: Layers,
+    reverse: false,
   },
   {
     title: "Empresario",
+    description:
+      "Empresario is a structured entrepreneurship module by E-CELL NIT Silchar, held during Tecnoesis, the annual technical fest of NIT Silchar. It offers aspiring entrepreneurs hands-on exposure to key business skills such as strategic thinking, innovation, market analysis, and investor interaction. Through events like the Business Hackathon, participants tackle real-world challenges, collaborate under pressure, and showcase ideas and prototypes, gaining valuable feedback and industry insights. Empresario bridges theory with practice, equipping students to confidently face real-world entrepreneurial challenges.",
     image: "/images/events/empresario.jpeg",
-    description: [
-      `<b class="text-[var(--blue-accent)]">Empresario</b> is a structured, entrepreneurship-focused module by <b class="text-[var(--blue-accent)]">E-CELL NIT Silchar</b>, conducted as part of <i><b>Tecnoesis</b></i>, the annual technical fest of NIT Silchar. The module is designed to provide aspiring entrepreneurs with hands-on experience in essential business competencies, including strategic thinking, innovation, market analysis, and investor engagement.</br>Through key events such as the <i>Business Hackathon</i>, participants collaborate to solve real-world entrepreneurial problems under time constraints, strengthening their abilities in problem-solving, teamwork, and execution. The <i>Startup Expo</i> offers a platform for innovators to showcase their ideas, products, and prototypes—facilitating exposure to industry insights, feedback, and potential opportunities. By bridging theoretical understanding with practical execution, Empresario delivers a comprehensive learning experience that prepares students to confidently navigate real-world entrepreneurial challenges.`,
-    ],
-    imagePosition: "right",
+    icon: Globe,
+    reverse: true,
   },
   {
     title: "Eminence",
+    description:
+      "Eminence, known as the Bermuda Triangle of Entrepreneurship, is E-CELL NIT Silchar’s most intellectually challenging event. Designed to push participants beyond conventional thinking, it immerses them in real-world entrepreneurial uncertainties through case studies, brainstorming sessions, and unconventional business challenges. Participants enter with raw ideas and leave with sharper strategies, clearer perspectives, and stronger decision-making skills. Rather than offering ready solutions, Eminence reshapes mindsets, builds resilience, and inspires bold, innovative thinking—making it a truly transformative experience.",
     image: "/images/events/eminence.jpeg",
-    description: [
-      `<b class="text-[var(--blue-accent)]">Eminence</b>, known as the Bermuda Triangle of Entrepreneurship, is <b class="text-[var(--blue-accent)]">E-CELL NIT Silchar’s</b> most intellectually stimulating and thought-provoking event. Designed to challenge conventional thinking, it pushes participants to step beyond comfort zones and confront real-world entrepreneurial uncertainties.</br>Through case studies, brainstorming exercises, and unconventional business challenges, participants enter with raw ideas and unanswered questions, only to emerge with sharper strategies, clearer perspectives, and stronger decision-making skills. Eminence is not about providing ready solutions; it’s about reshaping mindsets, testing resilience, and encouraging bold, innovative thinking.By navigating the unknown waters of entrepreneurship, participants leave more confident, adaptable, and prepared to turn challenges into opportunities—making Eminence a true transformation experience.`,
-    ],
-    imagePosition: "left",
+    icon: Rocket,
+    reverse: false,
   },
-];
+] satisfies EventData[];
