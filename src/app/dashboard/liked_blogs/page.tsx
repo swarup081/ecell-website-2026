@@ -1,6 +1,6 @@
 // src/app/dashboard/page.tsx
 "use client";
-import type { url } from "inspector";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState , useEffect } from "react";
@@ -56,7 +56,7 @@ export default function Dashboard() {
   // Show the data
   return (
     <div className="selection:bg-primary flex h-screen overflow-hidden bg-black text-slate-900 selection:text-white dark:text-white">
-      <aside className="flex hidden w-64 flex-shrink-0 flex-col border-r border-[#232f48] bg-[#111722] md:flex">
+      <aside className="flex  w-64 shrink-0 flex-col border-r border-[#232f48] bg-[#111722] md:flex">
         <div className="flex items-center gap-3 p-6">
           <div className="bg-primary flex size-8 items-center justify-center rounded text-white">
             <span className="material-symbols-outlined">dashboard</span>
@@ -157,7 +157,7 @@ export default function Dashboard() {
           <div className="mx-auto flex h-full max-w-5xl flex-col gap-8">
             <div className="rounded-xl border border-[#334155]/30 bg-[#232f48] p-6 md:p-8">
               <div className="flex flex-col items-start gap-8 md:flex-row">
-                <div className="mx-auto flex flex-shrink-0 flex-col items-center gap-4 md:mx-0">
+                <div className="mx-auto flex shrink-0 flex-col items-center gap-4 md:mx-0">
                   <div
                     className="group relative flex size-32 items-center justify-center overflow-hidden rounded-full border-2 border-[#1c6bff] bg-[#111722] shadow-[0_0_20px_rgba(0,199,255,0.8)] md:size-40"
                     style={{
@@ -276,7 +276,7 @@ export default function Dashboard() {
                         key={blog.id}
                       >
                         <div className="relative h-48 overflow-hidden bg-[#111722]">
-                          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#232f48] to-transparent">
+                          <div className="absolute inset-0 z-10 bg-linear-to-t from-[#232f48] to-transparent">
                             <img
                               alt="Profile"
                               className="h-full w-full object-cover"
