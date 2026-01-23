@@ -21,13 +21,13 @@ const Navbar: React.FC = () => {
     { name: "ABOUT US", href: "/about", isRoute: true },
     { name: "INITIATIVES", href: "/initiatives", isRoute: true },
     { name: "EVENTS", href: "#events", isRoute: false },
-    { name: "TEAM", href: "#", isRoute: false },
+    { name: "TEAM", href: "/team", isRoute: true },
     { name: "GALLERY", href: "/#gallery", isRoute: true },
   ];
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-[150] w-full transition-all duration-300 ${
         isScrolled
           ? "glass border-b border-white/10 py-4"
           : "bg-transparent py-6"
