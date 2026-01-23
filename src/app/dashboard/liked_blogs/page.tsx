@@ -55,8 +55,8 @@ export default function Dashboard() {
 
   // Show the data
   return (
-    <div className="selection:bg-primary flex h-screen overflow-hidden bg-black text-slate-900 selection:text-white dark:text-white">
-      <aside className="flex  w-64 shrink-0 flex-col border-r border-[#232f48] bg-[#111722] md:flex">
+    <div className="selection:bg-primary flex h-screen overflow-hidden bg-[#010d1c] text-slate-900 selection:text-white dark:text-white">
+      <aside className="flex  w-64 shrink-0 flex-col border-r border-[#093fb263] bg-[#091732] md:flex">
         <div className="flex items-center gap-3 p-6">
           <div className="bg-primary flex size-8 items-center justify-center rounded text-white">
             <span className="material-symbols-outlined">dashboard</span>
@@ -129,7 +129,7 @@ export default function Dashboard() {
         </div>
       </aside>
       <main className="bg-background-light dark:bg-background-dark relative flex h-full min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[#232f48] bg-[#111722]/95 px-6 py-4 backdrop-blur-sm">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[#0f44b561] bg-[#011126] px-6 py-4 backdrop-blur-sm">
           <div className="flex max-w-2xl flex-1 items-center gap-4">
             <button className="text-white md:hidden">
               <span className="material-symbols-outlined">menu</span>
@@ -155,7 +155,7 @@ export default function Dashboard() {
         </header>
         <div className="flex-1 overflow-y-auto p-4 lg:p-8">
           <div className="mx-auto flex h-full max-w-5xl flex-col gap-8">
-            <div className="rounded-xl border border-[#334155]/30 bg-[#232f48] p-6 md:p-8">
+            <div className="rounded-xl border border-[#0b50b0ad] bg-[#13315f8e] p-6 md:p-8">
               <div className="flex flex-col items-start gap-8 md:flex-row">
                 <div className="mx-auto flex shrink-0 flex-col items-center gap-4 md:mx-0">
                   <div
@@ -230,14 +230,14 @@ export default function Dashboard() {
                       </Link>
                     </div>
                   </div>
-                  <div className="rounded-lg border border-[#334155] bg-[#111722] p-4">
+                  <div className="rounded-lg bg-[#16387200] p-4">
                     <h3 className="mb-2 flex items-center gap-2 font-medium text-white">
                       <span className="material-symbols-outlined text-primary text-sm">
                         info
                       </span>
                       About
                     </h3>
-                    <p className="text-sm leading-relaxed text-[#92a4c9]">
+                    <p className="text-[16px] leading-relaxed text-[#92a4c9]">
                       {users[0]?.about}
                     </p>
                   </div>
@@ -245,7 +245,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex flex-col gap-6">
-              <nav className="flex items-center gap-6 border-b border-[#232f48]">
+              <nav className="flex items-center gap-6 border-b border-[#072669]">
                 <button 
                 onClick={()=> router.push("/dashboard")}
                 className="border-b-2 border-transparent pb-3 text-sm font-medium text-[#92a4c9] transition-colors hover:border-[#334155] hover:text-white">
@@ -271,7 +271,7 @@ export default function Dashboard() {
                   if (blog.is_liked === true) {
                     return (
                       <a
-                        className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#334155]/30 bg-[#232f48] transition-all hover:border-[#2b6cee]/30 hover:shadow-xl hover:shadow-[#2b6cee]/10"
+                        className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#0848a2ab] bg-[#0b1a3bb8] transition-all hover:border-[#2b6cee]/30 hover:shadow-xl hover:shadow-[#2b6cee]/10"
                         href="#"
                         key={blog.id}
                       >

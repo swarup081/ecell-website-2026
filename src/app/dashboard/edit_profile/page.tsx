@@ -1,10 +1,6 @@
 "use client";
-import { log } from "console";
-import type { url } from "inspector";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Router } from "react-router";
 
 interface User {
   id: number;
@@ -28,15 +24,6 @@ export default function Dashboard() {
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault(); 
 
-  const updatedUser = {
-    first_name,
-    post,
-    about,
-    facebook_profile,
-    instagram_handle,
-    linkedin_profile,
-    github,
-  };
   router.push("/dashboard");
 };
 
@@ -79,8 +66,8 @@ export default function Dashboard() {
 
   // Show the data
   return (
-    <div className="selection:bg-primary flex h-screen overflow-hidden bg-black text-slate-900 selection:text-white dark:text-white">
-      <aside className="flex hidden w-64 flex-shrink-0 flex-col border-r border-[#232f48] bg-[#111722] md:flex">
+    <div className="selection:bg-primary flex h-screen overflow-hidden bg-[#010f23] text-slate-900 selection:text-white dark:text-white">
+      <aside className="flex w-64 shrink-0 flex-col border-r border-[#0b3faf85] bg-[#091732] md:flex">
         <div className="flex items-center gap-3 p-6">
           <div className="bg-primary flex size-8 items-center justify-center rounded text-white">
             <span className="material-symbols-outlined">dashboard</span>
@@ -151,7 +138,7 @@ export default function Dashboard() {
         </div>
       </aside>
       <main className="bg-background-light dark:bg-background-dark relative flex h-full min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[#232f48] bg-[#111722]/95 px-6 py-4 backdrop-blur-sm">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[#073caf9d] bg-[#0c1934e0] px-6 py-4 backdrop-blur-sm">
           <div className="flex max-w-2xl flex-1 items-center gap-4">
             <button className="text-white md:hidden">
               <span className="material-symbols-outlined">menu</span>
@@ -169,7 +156,7 @@ export default function Dashboard() {
         </header>
         <div className="flex-1 overflow-y-auto p-4 lg:p-8">
           <div className="mx-auto max-w-4xl">
-            <form className="rounded-xl border-gray-500 border bg-[#283655] shadow-xl"
+            <form className="rounded-xl border-[#0950bab2] border bg-[#0a1e3d8e] shadow-xl"
             onSubmit={handleSubmit}
             >
               <div className="border-b border-[#334155]/30 p-6 md:p-8">
@@ -211,7 +198,7 @@ export default function Dashboard() {
                         </span>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0a53b9] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="fullName"
                         name="first_name"
                         type="text"
@@ -234,7 +221,7 @@ export default function Dashboard() {
                         </span>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0d52b4] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="position"
                         name="post"
                         type="text"
@@ -252,7 +239,7 @@ export default function Dashboard() {
                       About
                     </label>
                     <textarea
-                      className="block w-full rounded-lg border-none bg-[#111722] py-3 leading-relaxed text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-md"
+                      className="block w-full p-2 rounded-lg border-none bg-[#16233a72] py-3 leading-relaxed text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0b56c0] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-md"
                       id="about"
                       name="about"
                       value={about}
@@ -289,7 +276,7 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0b57c1] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="facebook"
                         placeholder={facebook_profile}
                         type="url"
@@ -314,7 +301,7 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0b56bf] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="instagram"
                         placeholder={instagram_handle}
                         type="url"
@@ -339,7 +326,7 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0c55ba] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="github"
                         placeholder={github}
                         type="url"
@@ -364,7 +351,7 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <input
-                        className="block w-full rounded-lg border-none bg-[#111722] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#334155] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
+                        className="block w-full rounded-lg border-none bg-[#16233a72] py-2.5 pl-10 text-white placeholder-[#92a4c9]/50 ring-1 ring-[#0d56bd] transition-shadow focus:ring-2 focus:ring-[#2b6cee] sm:text-sm"
                         id="linkedin"
                         placeholder={linkedin_profile}
                         type="url"
@@ -381,6 +368,7 @@ export default function Dashboard() {
                     Cancel
                   </button>
                   <button
+                    
                     className="bg-primary flex items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-600"
                     type="submit"
                   >
