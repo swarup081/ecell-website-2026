@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "1920px",
+        "4k": "2560px",
+      },
       fontFamily: {
         // This makes Poppins the default font for everything
         sans: ["var(--font-poppins)", "sans-serif"],
