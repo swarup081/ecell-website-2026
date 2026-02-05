@@ -87,10 +87,10 @@ const Timeline: React.FC = () => {
             {timelineData.map((item, i) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7 }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
                 className={`flex items-center gap-10 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
               >
                 {/* Content Side */}

@@ -2,10 +2,10 @@
 // @ts-nocheck
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { Quote, User } from "lucide-react";
-// --- Data Logic (Derived from the logic request) ---
+
 const testimonialsData = [
   {
     id: 1,
@@ -29,98 +29,85 @@ const testimonialsData = [
     image: "",
     text: "The events and workshops are top-notch. It's the best place to learn about entrepreneurship in the region. The team's dedication to fostering innovation is truly inspiring.",
   },
+  {
+    id: 4,
+    name: "Arun Verma",
+    role: "CTO @ InnovateX",
+    image: "",
+    text: "Being part of E-Cell events has been a highlight of my college life. The exposure to real-world business problems and the opportunity to solve them is invaluable.",
+  },
 ];
 
+// Duplicate data for infinite scroll
+const marqueeData = [...testimonialsData, ...testimonialsData, ...testimonialsData, ...testimonialsData];
+
 const Testimonials: React.FC = () => {
-  // --- State Logic (From the second snippet) ---
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // --- Auto-Rotation Logic (From the second snippet) ---
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonialsData.length);
-    }, 8000); // Rotates every 8 seconds
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <section className="relative overflow-hidden py-40">
+    <section className="relative overflow-hidden py-32 bg-[#020617]">
       {/* Background Decor */}
       <div className="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden opacity-[0.03] select-none">
-        <span className="absolute top-0 left-10 text-[20rem] font-black">
+        <span className="absolute top-10 right-10 text-[10rem] font-black text-white/10 lg:text-[20rem]">
           QUOTES
         </span>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6">
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl leading-none font-black tracking-tighter text-white uppercase lg:text-6xl">
-            Success <span className="text-blue-500">Stories</span>
-          </h2>
-        </div>
-        <div className="mx-auto max-w-5xl">
-          {/* Main Card */}
-          <div className="glass flex min-h-[400px] items-center rounded-[3rem] border border-white/10 p-8 md:min-h-[500px] md:p-12 lg:p-20">
-            {/* AnimatePresence handles the smooth fading switch between data */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.5 }}
-                className="flex w-full flex-col items-center gap-12 md:flex-row"
-              >
-                {/* Left Side: Image & Name */}
-                <div className="relative mb-6 flex h-48 w-48 items-center justify-center overflow-hidden rounded-full border-4 border-blue-500/20 bg-gray-900">
-                  {testimonialsData[currentIndex].image ? (
+      <div className="relative z-10 container mx-auto mb-16 px-6 text-center">
+        <h2 className="text-4xl leading-none font-black tracking-tighter text-white uppercase lg:text-6xl">
+          Success <span className="text-blue-500">Stories</span>
+        </h2>
+      </div>
+
+      {/* Infinite Scroll Container */}
+      <div className="relative flex overflow-hidden mask-linear-fade py-10">
+        <motion.div
+          animate={{ x: "-50%" }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="flex gap-8 px-4"
+          style={{ width: "max-content" }}
+        >
+          {marqueeData.map((item, idx) => (
+            <div
+              key={`${item.id}-${idx}`}
+              className="glass group relative w-[350px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:border-blue-500/30 hover:bg-white/10 md:w-[450px]"
+            >
+               {/* Hover Glow Effect */}
+              <div className="absolute inset-0 -z-10 rounded-3xl bg-blue-600/0 blur-xl transition-colors duration-500 group-hover:bg-blue-600/5" />
+
+              <Quote className="mb-6 text-blue-500/50" size={40} />
+
+              <p className="mb-8 min-h-[120px] text-base leading-relaxed font-light text-gray-300 italic md:text-lg">
+                &quot;{item.text}&quot;
+              </p>
+
+              <div className="flex items-center gap-4 border-t border-white/5 pt-6">
+                <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-blue-500/20 bg-gray-900">
+                  {item.image ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
-                      src={testimonialsData[currentIndex].image}
-                      alt={testimonialsData[currentIndex].name}
+                      src={item.image}
+                      alt={item.name}
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    /* Fallback if no image is provided */
-                    <User size={64} className="text-blue-500/40" />
+                    <div className="flex h-full w-full items-center justify-center bg-gray-800">
+                        <User size={20} className="text-blue-400" />
+                    </div>
                   )}
                 </div>
-
-                {/* Right Side: Quote */}
-                <div className="relative md:w-2/3">
-                  <Quote
-                    className="absolute -top-10 -left-6 text-blue-500/20"
-                    size={80}
-                  />
-                  <p className="relative z-10 mb-6 text-lg leading-relaxed font-light text-gray-300 italic sm:text-xl md:mb-10 md:text-2xl lg:text-3xl">
-                    &quot;{testimonialsData[currentIndex].text}&quot;
+                <div>
+                  <h4 className="font-bold text-white">{item.name}</h4>
+                  <p className="text-xs font-medium text-blue-400 uppercase tracking-wider">
+                    {item.role}
                   </p>
-
-                  <div className="mt-8 flex items-center justify-between">
-                    {/* Decorative Line */}
-                    <div className="h-1 w-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600" />
-
-                    {/* Navigation Dots (Logic added to UI) */}
-                    <div className="flex gap-2">
-                      {testimonialsData.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentIndex(idx)}
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            idx === currentIndex
-                              ? "w-8 bg-blue-500"
-                              : "w-2 bg-white/20 hover:bg-white/40"
-                          }`}
-                          aria-label={`Go to testimonial ${idx + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

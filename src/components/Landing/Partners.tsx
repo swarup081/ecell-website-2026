@@ -33,8 +33,8 @@ const Partners: React.FC = () => {
     },
   ];
 
-  // Double the list for seamless infinite scroll
-  const marqueeItems = [...partners, ...partners];
+  // Quadruple the list for seamless infinite scroll on wide screens
+  const marqueeItems = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <section className="overflow-hidden border-y border-white/5 bg-gray-950/20 py-24">
@@ -47,27 +47,33 @@ const Partners: React.FC = () => {
         </p>
       </div>
 
-      <div className="relative flex overflow-hidden">
+      <div className="relative flex overflow-hidden mask-linear-fade">
+         {/* Added mask for fading edges if CSS supports it, else just overflow hidden */}
         <motion.div
-          animate={{ x: [0, -100 * partners.length] }}
+          animate={{ x: "-50%" }}
           transition={{
-            duration: 20,
+            duration: 30,
             repeat: Infinity,
             ease: "linear",
           }}
-          className="flex items-center gap-10 px-4 whitespace-nowrap md:gap-20 md:px-10"
+          className="flex min-w-max items-center gap-16 px-4"
         >
           {marqueeItems.map((partner, i) => (
             <div
               key={i}
-              className="flex h-12 w-32 cursor-pointer items-center justify-center opacity-40 grayscale transition-all duration-500 hover:opacity-100 hover:grayscale-0 md:h-16 md:w-56"
+              className="group flex items-center gap-4 opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={partner.url}
-                alt={partner.name}
-                className="h-full w-auto object-contain brightness-0 invert"
-              />
+              <div className="h-12 w-12 md:h-16 md:w-16 flex-shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={partner.url}
+                    alt={partner.name}
+                    className="h-full w-full object-contain brightness-0 invert"
+                  />
+              </div>
+              <span className="text-xl font-bold tracking-wider text-white uppercase md:text-2xl">
+                  {partner.name}
+              </span>
             </div>
           ))}
         </motion.div>
