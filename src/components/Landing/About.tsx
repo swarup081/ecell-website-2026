@@ -10,7 +10,7 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
-import { ArrowRight, Activity, Rocket } from "lucide-react";
+import { ArrowRight, Activity, Image as ImageIcon } from "lucide-react";
 
 const StatCounter: React.FC<{
   value: number;
@@ -209,35 +209,35 @@ const About: React.FC = () => {
                     <div className="ml-auto text-[10px] font-mono text-gray-600 uppercase">System Active</div>
                  </div>
 
-                {/* Content: Abstract Map */}
+                {/* Content: Abstract Wireframe Placeholder */}
                 <div className="relative h-full w-full p-6 flex flex-col items-center justify-center overflow-hidden">
 
-                    {/* Central Hub */}
-                    <div className="relative z-10 flex flex-col items-center">
+                    {/* Placeholder Graphic */}
+                    <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
                         <motion.div
-                          animate={{
-                              boxShadow: ["0 0 20px rgba(59,130,246,0)", "0 0 40px rgba(59,130,246,0.2)", "0 0 20px rgba(59,130,246,0)"],
-                              scale: [1, 1.05, 1]
-                           }}
-                          transition={{ duration: 4, repeat: Infinity }}
-                          className="w-20 h-20 rounded-2xl border border-blue-500/20 flex items-center justify-center bg-blue-900/10 backdrop-blur-md rotate-45"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                          className="w-full max-w-[200px] aspect-video rounded-lg border-2 border-dashed border-white/20 flex items-center justify-center bg-white/5"
                         >
-                            <Rocket size={32} className="text-blue-400 -rotate-45" />
+                            <ImageIcon size={48} className="text-white/20" />
                         </motion.div>
 
-                        <div className="mt-8 text-center">
-                            <h3 className="text-2xl font-black text-white tracking-tight">Launchpad</h3>
-                            <p className="text-xs text-blue-400 font-mono mt-1">INCUBATION_PROTOCOL_V2</p>
+                        <div className="mt-6 flex flex-col gap-2 w-full max-w-[200px]">
+                            <div className="h-2 w-full bg-white/10 rounded-full" />
+                            <div className="h-2 w-2/3 bg-white/10 rounded-full" />
                         </div>
                     </div>
 
-                    {/* Minimal Orbit */}
+                    {/* Minimal Orbit Background */}
                     <motion.div
                        animate={{ rotate: 360 }}
-                       transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                       className="absolute inset-0 z-0 pointer-events-none"
+                       transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                       className="absolute inset-0 z-0 pointer-events-none opacity-20"
                     >
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full border border-dashed border-white/5" />
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-white/5" />
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px]">
+                             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/20" />
+                         </div>
                     </motion.div>
                 </div>
               </div>

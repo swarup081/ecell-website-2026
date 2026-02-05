@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Sparkles, TrendingUp, Users, Activity, Globe, Code, ArrowRight } from "lucide-react";
+import { TrendingUp, Users, Activity, Globe, LayoutDashboard, Shield, ArrowRight } from "lucide-react";
 
 const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -108,7 +108,7 @@ const Hero: React.FC = () => {
            </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: HIGH-FIDELITY BENTO GRID */}
+        {/* RIGHT COLUMN: HIGH-FIDELITY BENTO GRID (Clean Placeholder Version) */}
         <div className="relative h-[600px] w-full hidden lg:block perspective-1000">
             <div className="grid h-full grid-cols-3 grid-rows-3 gap-4 p-4">
 
@@ -191,36 +191,37 @@ const Hero: React.FC = () => {
                     </div>
                 </motion.div>
 
-                {/* Item 4: Terminal Snippet (Bottom Left Wide) */}
+                {/* Item 4: Project Dashboard Placeholder (Bottom Left Wide) - REPLACED TERMINAL */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.9, duration: 0.5 }}
                     whileHover={{ scale: 1.02 }}
-                    className="glass col-span-2 flex flex-col justify-center rounded-3xl border border-white/5 bg-[#0a0f1c] p-6 font-mono text-xs overflow-hidden backdrop-blur-xl relative"
+                    className="glass col-span-2 flex flex-col justify-center rounded-3xl border border-white/5 bg-[#0a0f1c] p-6 overflow-hidden backdrop-blur-xl relative"
                 >
-                    <div className="absolute top-0 right-0 p-4 opacity-20">
-                        <Code size={40} />
+                    <div className="absolute top-0 right-0 p-4 opacity-10">
+                        <LayoutDashboard size={60} />
                     </div>
-                    <div className="flex gap-1.5 mb-4 border-b border-white/5 pb-2">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                    </div>
-                    <div className="space-y-2 text-gray-400 relative z-10">
-                        <p><span className="text-pink-400">const</span> <span className="text-blue-400">incubate</span> = <span className="text-yellow-300">async</span> () ={">"} {"{"}</p>
-                        <p className="pl-4"><span className="text-pink-400">await</span> <span className="text-purple-400">idea</span>.validate();</p>
-                        <p className="pl-4"><span className="text-pink-400">return</span> <span className="text-green-400">&quot;SUCCESS&quot;</span>;</p>
-                        <p>{"}"}</p>
-                        <motion.div
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: 0.8, repeat: Infinity }}
-                            className="w-2 h-4 bg-blue-500 inline-block align-middle ml-1"
-                        />
+
+                    {/* Abstract UI Blocks */}
+                    <div className="flex flex-col gap-3 relative z-10">
+                        <div className="flex justify-between items-center mb-2">
+                             <div className="h-2 w-20 bg-gray-700 rounded-full" />
+                             <div className="h-2 w-8 bg-blue-500/50 rounded-full" />
+                        </div>
+                        <div className="flex gap-2">
+                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
+                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
+                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
+                        </div>
+                        <div className="h-8 w-full bg-white/5 rounded-lg border border-white/5 mt-2 flex items-center px-3 gap-2">
+                             <div className="h-2 w-2 rounded-full bg-green-500" />
+                             <div className="h-2 w-1/2 bg-gray-700 rounded-full" />
+                        </div>
                     </div>
                 </motion.div>
 
-                 {/* Item 5: Code Icon (Bottom Right) */}
+                 {/* Item 5: Security/Target Icon (Bottom Right) - REPLACED CODE ICON */}
                  <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -230,7 +231,7 @@ const Hero: React.FC = () => {
                 >
                     <div className="relative">
                         <div className="absolute inset-0 bg-pink-500/20 blur-xl rounded-full" />
-                        <Sparkles size={32} className="text-pink-400 relative z-10 animate-pulse" />
+                        <Shield size={32} className="text-pink-400 relative z-10" />
                     </div>
                 </motion.div>
             </div>
