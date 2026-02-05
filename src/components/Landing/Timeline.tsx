@@ -2,7 +2,7 @@
 // @ts-nocheck
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Rocket, Target, Lightbulb, TrendingUp, Users } from "lucide-react";
 
@@ -59,6 +59,18 @@ const timelineData: TimelineItem[] = [
 ];
 
 const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: number; isEven: boolean }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -69,22 +81,33 @@ const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: numb
         >
             {/* Content Card */}
             <div className={`flex-1 ${isEven ? "md:text-right md:pr-16" : "md:text-left md:pl-16"} pl-16 md:pl-0`}>
-                <div className="group relative">
-                    <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <div className="glass relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a0f1c] p-6 transition-all duration-300 hover:bg-[#111827]">
-                        {/* Decorative Corner */}
-                        <div className={`absolute top-0 h-[2px] w-8 ${isEven ? "right-0" : "left-0"}`} style={{ backgroundColor: item.color }} />
-                        <div className={`absolute top-0 h-8 w-[2px] ${isEven ? "right-0" : "left-0"}`} style={{ backgroundColor: item.color }} />
+                <div
+                   ref={cardRef}
+                   onMouseMove={handleMouseMove}
+                   className="group relative"
+                >
+                    {/* Glass Card */}
+                    <div className="glass relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:border-blue-500/30 hover:bg-[#0d1117]/60">
+                        {/* Spotlight Effect */}
+                        <div
+                           className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+                           style={{
+                               background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(59, 130, 246, 0.1), transparent 40%)`,
+                           }}
+                        />
 
-                        <div className={`mb-2 flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-gray-500 ${isEven ? "md:justify-end" : "md:justify-start"}`}>
+                        {/* Decorative Accent */}
+                        <div className={`absolute top-0 h-[2px] w-12 ${isEven ? "right-8" : "left-8"}`} style={{ backgroundColor: item.color }} />
+
+                        <div className={`mb-3 flex items-center gap-3 text-xs font-mono font-bold uppercase tracking-widest text-gray-500 ${isEven ? "md:justify-end" : "md:justify-start"}`}>
                             <span>{item.date}</span>
-                            <div className="h-[1px] w-8 bg-gray-700" />
+                            <div className="h-[1px] w-8 bg-white/10" />
                         </div>
 
-                        <h3 className="mb-2 text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                        <h3 className="mb-3 text-2xl font-black text-white group-hover:text-blue-400 transition-colors">
                             {item.title}
                         </h3>
-                        <p className="text-sm leading-relaxed text-gray-400">
+                        <p className="text-sm leading-relaxed text-gray-400 font-light">
                             {item.desc}
                         </p>
                     </div>
@@ -93,14 +116,14 @@ const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: numb
 
             {/* Central Node */}
             <div className="absolute left-[20px] md:relative md:left-auto flex-shrink-0 z-30">
-                <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[#020617] border-4 border-[#020617] ring-1 ring-white/20">
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#020617] border-[3px] border-[#020617] ring-1 ring-white/10 shadow-[0_0_20px_rgba(0,0,0,0.8)]">
                      <motion.div
-                        className="absolute inset-0 rounded-full opacity-50 blur-md"
+                        className="absolute inset-0 rounded-full opacity-30 blur-md"
                         style={{ backgroundColor: item.color }}
-                        animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
+                        transition={{ duration: 3, repeat: Infinity }}
                      />
-                     <div className="relative z-10 h-3 w-3 rounded-full bg-white" />
+                     <item.icon size={20} style={{ color: item.color }} className="relative z-10" />
                 </div>
             </div>
 
@@ -128,10 +151,10 @@ const Timeline: React.FC = () => {
 
       {/* Background Grid */}
       <div
-         className="absolute inset-0 pointer-events-none opacity-5"
+         className="absolute inset-0 pointer-events-none opacity-[0.03]"
          style={{
-             backgroundImage: "linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)",
-             backgroundSize: "40px 40px"
+             backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+             backgroundSize: "60px 60px"
          }}
       />
 
@@ -150,21 +173,21 @@ const Timeline: React.FC = () => {
             <h2 className="mb-6 text-4xl font-black tracking-tighter text-white uppercase md:text-6xl">
                 The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">Roadmap</span>
             </h2>
-            <p className="mx-auto max-w-xl text-gray-400">
+            <p className="mx-auto max-w-xl text-gray-400 font-light">
                 A structured journey designed to transform raw potential into market-ready innovation.
             </p>
         </div>
 
         <div className="relative mx-auto max-w-5xl">
             {/* The "Laser Beam" Line */}
-            <div className="absolute top-0 bottom-0 left-[20px] w-[2px] bg-white/5 md:left-1/2 -translate-x-1/2" />
+            <div className="absolute top-0 bottom-0 left-[27px] w-[1px] bg-white/5 md:left-1/2 -translate-x-1/2" />
 
             <motion.div
                 style={{ scaleY, originY: 0 }}
-                className="absolute top-0 bottom-0 left-[20px] w-[2px] bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 shadow-[0_0_20px_rgba(59,130,246,0.6)] md:left-1/2 -translate-x-1/2 z-0"
+                className="absolute top-0 bottom-0 left-[27px] w-[1px] bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] md:left-1/2 -translate-x-1/2 z-0"
             />
 
-            <div className="relative z-10 flex flex-col gap-16 md:gap-24">
+            <div className="relative z-10 flex flex-col gap-20">
                 {timelineData.map((item, i) => (
                     <TimelineNode key={item.id} item={item} index={i} isEven={i % 2 === 0} />
                 ))}

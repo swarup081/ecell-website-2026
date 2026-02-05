@@ -89,6 +89,16 @@ const About: React.FC = () => {
     cardY.set(e.clientY - rect.top);
   };
 
+  // Spotlight Logic for the main card
+  const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
+  const handleSpotlightMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setSpotlightPos({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+      });
+  };
+
   return (
     <section
       id="about"
@@ -155,7 +165,7 @@ const About: React.FC = () => {
             </motion.button>
           </motion.div>
 
-          {/* INTERACTIVE IMAGE CARD (Browser Window Style) */}
+          {/* INTERACTIVE IMAGE CARD (Sleek Glass Panel) */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +174,10 @@ const About: React.FC = () => {
             className="perspective-2000 mt-12 w-full lg:mt-0 lg:w-1/2"
           >
             <motion.div
-              onMouseMove={handleCardMove}
+              onMouseMove={(e) => {
+                  handleCardMove(e);
+                  handleSpotlightMove(e);
+              }}
               onMouseLeave={() => {
                 cardX.set(400);
                 cardY.set(300);
@@ -174,59 +187,60 @@ const About: React.FC = () => {
                 rotateY: cardRotateY,
                 transformStyle: "preserve-3d",
               }}
-              className="relative mx-auto aspect-[4/5] w-full max-w-md md:aspect-square"
+              className="relative mx-auto aspect-[4/5] w-full max-w-md md:aspect-square group"
             >
               {/* Main Container */}
-              <div className="glass group absolute inset-0 overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#0d1117]/80 backdrop-blur-xl">
-                 {/* Window Header */}
-                 <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                    <div className="ml-4 h-4 w-32 rounded-full bg-white/10" />
+              <div className="glass absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0d1117]/40 shadow-2xl backdrop-blur-xl">
+
+                 {/* Spotlight Effect */}
+                 <div
+                   className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover:opacity-100"
+                   style={{
+                       background: `radial-gradient(600px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(59, 130, 246, 0.1), transparent 40%)`,
+                   }}
+                 />
+
+                 {/* Window Header (Minimal) */}
+                 <div className="flex items-center gap-2 px-6 py-5 border-b border-white/5 bg-white/[0.02]">
+                    <div className="flex gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    </div>
+                    <div className="ml-auto text-[10px] font-mono text-gray-600 uppercase">System Active</div>
                  </div>
 
-                {/* Window Content: Abstract Map */}
+                {/* Content: Abstract Map */}
                 <div className="relative h-full w-full p-6 flex flex-col items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
 
                     {/* Central Hub */}
                     <div className="relative z-10 flex flex-col items-center">
                         <motion.div
-                          animate={{ boxShadow: ["0 0 20px rgba(59,130,246,0)", "0 0 40px rgba(59,130,246,0.3)", "0 0 20px rgba(59,130,246,0)"] }}
-                          transition={{ duration: 3, repeat: Infinity }}
-                          className="w-24 h-24 rounded-full border border-blue-500/30 flex items-center justify-center bg-blue-900/20 backdrop-blur-sm"
+                          animate={{
+                              boxShadow: ["0 0 20px rgba(59,130,246,0)", "0 0 40px rgba(59,130,246,0.2)", "0 0 20px rgba(59,130,246,0)"],
+                              scale: [1, 1.05, 1]
+                           }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                          className="w-20 h-20 rounded-2xl border border-blue-500/20 flex items-center justify-center bg-blue-900/10 backdrop-blur-md rotate-45"
                         >
-                            <Rocket size={40} className="text-blue-400" />
+                            <Rocket size={32} className="text-blue-400 -rotate-45" />
                         </motion.div>
-                        <div className="h-20 w-[1px] bg-gradient-to-b from-blue-500/50 to-transparent my-4" />
-                        <div className="text-center">
-                            <h3 className="text-xl font-bold text-white">Launchpad</h3>
-                            <p className="text-xs text-blue-300/60 uppercase tracking-widest">Incubation Center</p>
+
+                        <div className="mt-8 text-center">
+                            <h3 className="text-2xl font-black text-white tracking-tight">Launchpad</h3>
+                            <p className="text-xs text-blue-400 font-mono mt-1">INCUBATION_PROTOCOL_V2</p>
                         </div>
                     </div>
 
-                    {/* Orbiting Elements */}
+                    {/* Minimal Orbit */}
                     <motion.div
                        animate={{ rotate: 360 }}
-                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                       transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                        className="absolute inset-0 z-0 pointer-events-none"
                     >
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full border border-dashed border-white/5" />
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px]">
-                              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7]" />
-                         </div>
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full border border-dashed border-white/5" />
                     </motion.div>
                 </div>
               </div>
-
-              {/* Decorative Ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                style={{ translateZ: "-30px" }}
-                className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full border-2 border-dashed border-blue-500/15 md:-bottom-20 md:-left-20 md:h-64 md:w-64 opacity-50"
-              />
 
               {/* Floating Element: Stats Box (Slide In from Right) */}
               <motion.div
@@ -235,12 +249,12 @@ const About: React.FC = () => {
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.5, type: "spring" }}
-                className="glass absolute -right-4 bottom-8 z-20 rounded-2xl border border-white/20 bg-[#020617]/60 backdrop-blur-xl px-6 py-5 shadow-2xl md:-right-10 md:bottom-10 md:rounded-3xl"
+                className="glass absolute -right-4 bottom-10 z-20 rounded-3xl border border-white/10 bg-[#0d1117]/80 backdrop-blur-xl px-8 py-6 shadow-2xl md:-right-10"
               >
-                  <div className="flex gap-8 items-center">
-                    <StatCounter value={50} label="Active Startups" suffix="+" />
-                    <div className="w-[1px] h-8 bg-white/10"></div>
-                    <StatCounter value={20} label="Global Partners" suffix="+" />
+                  <div className="flex gap-10 items-center">
+                    <StatCounter value={50} label="Startups" suffix="+" />
+                    <div className="w-[1px] h-10 bg-white/10"></div>
+                    <StatCounter value={20} label="Partners" suffix="+" />
                   </div>
               </motion.div>
             </motion.div>

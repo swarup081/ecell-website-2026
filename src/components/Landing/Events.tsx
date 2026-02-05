@@ -2,7 +2,7 @@
 // @ts-nocheck
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, Code2, Users2, Rocket } from "lucide-react";
 
@@ -49,8 +49,111 @@ const events = [
   },
 ];
 
+const EventCard = ({
+    event,
+    isMobile = false,
+  }: {
+    event: (typeof events)[0];
+    isMobile?: boolean;
+  }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+
+    return (
+        <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            className={`glass group relative flex w-full overflow-hidden rounded-[2rem] border border-white/5 bg-[#0d1117]/40 p-8 shadow-2xl transition-all duration-500 hover:bg-[#0d1117]/60 ${
+                isMobile
+                ? "flex-col gap-6 sm:flex-row sm:items-center"
+                : "h-full flex-col items-start justify-between"
+            }`}
+        >
+            {/* Spotlight Effect */}
+            <div
+                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+                style={{
+                    background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(59, 130, 246, 0.1), transparent 40%)`,
+                }}
+            />
+
+            {/* Background Image (Subtle) */}
+            <div className="absolute inset-0 z-0 opacity-0 transition-opacity duration-700 group-hover:opacity-20">
+                {/* eslint-disable-next-line @next/next/no-img-element */ }
+                <img
+                    src={event.img}
+                    alt=""
+                    className="h-full w-full object-cover grayscale"
+                />
+                <div
+                    className="absolute inset-0 bg-[#0d1117]/80"
+                />
+            </div>
+
+            {/* Content */}
+            <div
+                className={`relative z-10 flex w-full ${isMobile ? "flex-col gap-4 sm:flex-row sm:gap-6" : "h-full flex-col justify-between"}`}
+            >
+                {/* Icon & Category Top */}
+                <div
+                    className={`flex shrink-0 items-start ${isMobile ? "w-full justify-between sm:w-auto sm:flex-col sm:justify-start sm:gap-4" : "mb-8 w-full justify-between"}`}
+                >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-inner backdrop-blur-xl md:h-14 md:w-14">
+                        <event.icon
+                            size={22}
+                            className="text-white opacity-90"
+                        />
+                    </div>
+
+                    <span
+                        className={`bg-gradient-to-r text-[10px] font-black tracking-widest uppercase ${event.tagGradient} bg-clip-text text-transparent sm:text-xs ${!isMobile ? "lg:text-xs" : ""}`}
+                    >
+                        {event.category}
+                    </span>
+                </div>
+
+                {/* Text Information */}
+                <div className={`flex flex-col ${isMobile ? "mt-2" : "mt-auto"}`}>
+                    <h3
+                        className={`leading-none font-black tracking-tight text-white group-hover:text-blue-100 transition-colors ${isMobile ? "mb-2 text-2xl" : "mb-3 text-3xl"}`}
+                    >
+                        {isMobile ? event.title.replace("\n", " ") : event.title}
+                    </h3>
+
+                    <h4 className="mb-3 text-[10px] font-bold tracking-widest text-gray-400 uppercase">
+                        {event.subtitle}
+                    </h4>
+
+                    <div
+                        className={`${isMobile ? "line-clamp-3" : "line-clamp-4 lg:line-clamp-none"}`}
+                    >
+                        <p className="text-sm leading-relaxed font-light text-gray-400 group-hover:text-gray-300 transition-colors">
+                        {event.desc}
+                        </p>
+                    </div>
+
+                    {!isMobile && (
+                        <div className="mt-6 flex items-center gap-2 text-xs font-bold text-blue-500 transition-all group-hover:gap-3">
+                            <span>Explore Details</span>
+                            <span>→</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Events: React.FC = () => {
-  // --- Logic from your snippet (State & Effect) ---
   const [currentEvent, setCurrentEvent] = useState(0);
 
   useEffect(() => {
@@ -60,94 +163,14 @@ const Events: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Shared Card Component for cleaner code
-  const EventCard = ({
-    event,
-    isMobile = false,
-  }: {
-    event: (typeof events)[0];
-    isMobile?: boolean;
-  }) => (
-    <div
-      className={`relative flex w-full overflow-hidden rounded-[2.5rem] bg-[#020617] p-6 shadow-2xl transition-all duration-300 hover:shadow-blue-900/10 lg:p-10 ${
-        isMobile
-          ? "flex-col gap-6 sm:flex-row sm:items-center"
-          : "h-full flex-col items-start justify-between"
-      } group`}
-    >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 opacity-25 transition-all duration-700 group-hover:opacity-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={event.img}
-          alt=""
-          className="h-full w-full object-cover brightness-[0.4] grayscale"
-        />
-        <div
-          className={`absolute inset-0 ${isMobile ? "bg-gradient-to-r" : "bg-gradient-to-b"} from-[#020617] via-transparent to-[#020617]`}
-        />
-      </div>
-
-      {/* Content */}
-      <div
-        className={`relative z-10 flex w-full ${isMobile ? "flex-col gap-4 sm:flex-row sm:gap-6" : "h-full flex-col justify-between"}`}
-      >
-        {/* Icon & Category Top */}
-        <div
-          className={`flex shrink-0 items-start ${isMobile ? "w-full justify-between sm:w-auto sm:flex-col sm:justify-start sm:gap-4" : "mb-8 w-full justify-between"}`}
-        >
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-2xl backdrop-blur-xl md:h-14 md:w-14 lg:h-16 lg:w-16">
-            <event.icon
-              size={24}
-              className="text-white opacity-80 lg:h-[26px] lg:w-[26px]"
-            />
-          </div>
-
-          <span
-            className={`bg-gradient-to-r text-[10px] font-black tracking-widest uppercase ${event.tagGradient} bg-clip-text text-transparent sm:text-xs ${!isMobile ? "lg:text-sm" : ""}`}
-          >
-            {event.category}
-          </span>
-        </div>
-
-        {/* Text Information */}
-        <div className={`flex flex-col ${isMobile ? "mt-2" : "mt-auto"}`}>
-          <h3
-            className={`leading-none font-black tracking-tight text-white ${isMobile ? "mb-2 text-2xl" : "mb-4 text-3xl lg:text-5xl"}`}
-          >
-            {isMobile ? event.title.replace("\n", " ") : event.title}
-          </h3>
-
-          <h4 className="mb-2 text-xs font-bold tracking-wider text-gray-400 uppercase md:text-sm">
-            {event.subtitle}
-          </h4>
-
-          <div
-            className={`${isMobile ? "line-clamp-3" : "line-clamp-4 lg:line-clamp-none"}`}
-          >
-            <p className="text-sm leading-relaxed font-medium text-gray-500 md:text-base">
-              {event.desc}
-            </p>
-          </div>
-
-          {!isMobile && (
-            <div className="mt-6 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white transition-colors hover:bg-white/10">
-              →
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <section
       id="events"
-      className="relative overflow-hidden bg-transparent py-24 lg:py-40"
+      className="relative overflow-hidden bg-[#020617] py-24 lg:py-32"
     >
       <div className="relative z-10 container mx-auto px-6">
         {/* Header */}
-        <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-24">
+        <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -162,7 +185,7 @@ const Events: React.FC = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-2 max-w-sm text-sm leading-relaxed text-gray-500"
+            className="mb-2 max-w-sm text-sm leading-relaxed text-gray-500 font-light"
           >
             Participate in our high-stakes challenges designed to push your
             entrepreneurial limits.
@@ -170,7 +193,7 @@ const Events: React.FC = () => {
         </div>
 
         {/* --- DESKTOP VIEW (Grid) --- */}
-        <div className="hidden gap-10 lg:grid lg:grid-cols-4">
+        <div className="hidden gap-6 lg:grid lg:grid-cols-4">
           {events.map((event, i) => (
             <motion.div
               key={event.id}
@@ -178,14 +201,14 @@ const Events: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="glowing-border"
+              className="h-full"
             >
               <EventCard event={event} />
             </motion.div>
           ))}
         </div>
 
-        {/* --- MOBILE VIEW (Carousel - Logic from your snippet) --- */}
+        {/* --- MOBILE VIEW (Carousel) --- */}
         <div className="relative lg:hidden">
           <div className="min-h-[280px]">
             <AnimatePresence mode="wait">
@@ -195,10 +218,9 @@ const Events: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.5 }}
-                className="glowing-border w-full"
+                className="w-full"
               >
-                {/* Mobile Horizontal Card */}
-                <EventCard event={events[currentEvent]} isMobile={true} />
+                <EventCard event={event} isMobile={true} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -220,9 +242,6 @@ const Events: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-0 -z-10 h-[600px] w-full -translate-y-1/2 rounded-full bg-blue-500/5 opacity-30 blur-[120px]" />
     </section>
   );
 };
