@@ -69,9 +69,10 @@ const EventCard = ({
     };
 
     return (
-        <div
+        <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
+            whileHover={{ y: -10, scale: 1.02 }}
             className={`glass group relative flex w-full overflow-hidden rounded-[2rem] border border-white/5 bg-[#0d1117]/40 p-8 shadow-2xl transition-all duration-500 hover:bg-[#0d1117]/60 ${
                 isMobile
                 ? "flex-col gap-6 sm:flex-row sm:items-center"
@@ -107,12 +108,15 @@ const EventCard = ({
                 <div
                     className={`flex shrink-0 items-start ${isMobile ? "w-full justify-between sm:w-auto sm:flex-col sm:justify-start sm:gap-4" : "mb-8 w-full justify-between"}`}
                 >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-inner backdrop-blur-xl md:h-14 md:w-14">
+                    <motion.div
+                       whileHover={{ rotate: 10, scale: 1.1 }}
+                       className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-inner backdrop-blur-xl md:h-14 md:w-14"
+                    >
                         <event.icon
                             size={22}
                             className="text-white opacity-90"
                         />
-                    </div>
+                    </motion.div>
 
                     <span
                         className={`bg-gradient-to-r text-[10px] font-black tracking-widest uppercase ${event.tagGradient} bg-clip-text text-transparent sm:text-xs ${!isMobile ? "lg:text-xs" : ""}`}
@@ -142,14 +146,14 @@ const EventCard = ({
                     </div>
 
                     {!isMobile && (
-                        <div className="mt-6 flex items-center gap-2 text-xs font-bold text-blue-500 transition-all group-hover:gap-3">
+                        <div className="mt-6 flex items-center gap-2 text-xs font-bold text-blue-500 transition-all group-hover:gap-3 group-hover:text-blue-400">
                             <span>Explore Details</span>
                             <span>→</span>
                         </div>
                     )}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
@@ -197,10 +201,10 @@ const Events: React.FC = () => {
           {events.map((event, i) => (
             <motion.div
               key={event.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
+              transition={{ delay: i * 0.15, duration: 0.6, type: "spring" }}
               className="h-full"
             >
               <EventCard event={event} />

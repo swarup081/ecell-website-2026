@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Rocket, Target, Lightbulb, TrendingUp, Users } from "lucide-react";
 
 interface TimelineItem {
@@ -73,10 +73,10 @@ const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: numb
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.7, delay: index * 0.1, type: "spring", stiffness: 50 }}
             className={`relative flex items-center gap-8 md:gap-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
         >
             {/* Content Card */}
@@ -84,10 +84,13 @@ const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: numb
                 <div
                    ref={cardRef}
                    onMouseMove={handleMouseMove}
-                   className="group relative"
+                   className="group relative perspective-1000"
                 >
                     {/* Glass Card */}
-                    <div className="glass relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:border-blue-500/30 hover:bg-[#0d1117]/60">
+                    <motion.div
+                       whileHover={{ scale: 1.02, rotateX: isEven ? 2 : -2, rotateY: isEven ? 2 : -2 }}
+                       className="glass relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:border-blue-500/30 hover:bg-[#0d1117]/60"
+                    >
                         {/* Spotlight Effect */}
                         <div
                            className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
@@ -107,16 +110,16 @@ const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: numb
                         <h3 className="mb-3 text-2xl font-black text-white group-hover:text-blue-400 transition-colors">
                             {item.title}
                         </h3>
-                        <p className="text-sm leading-relaxed text-gray-400 font-light">
+                        <p className="text-sm leading-relaxed text-gray-400 font-light group-hover:text-gray-300 transition-colors">
                             {item.desc}
                         </p>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Central Node */}
             <div className="absolute left-[20px] md:relative md:left-auto flex-shrink-0 z-30">
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#020617] border-[3px] border-[#020617] ring-1 ring-white/10 shadow-[0_0_20px_rgba(0,0,0,0.8)]">
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#020617] border-[3px] border-[#020617] ring-1 ring-white/10 shadow-[0_0_20px_rgba(0,0,0,0.8)] transition-all duration-500 hover:scale-125 hover:ring-white/30">
                      <motion.div
                         className="absolute inset-0 rounded-full opacity-30 blur-md"
                         style={{ backgroundColor: item.color }}
@@ -145,6 +148,9 @@ const Timeline: React.FC = () => {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Dynamic beam gradient based on scroll
+  const beamColor = useTransform(scrollYProgress, [0, 0.5, 1], ["#3b82f6", "#a855f7", "#ec4899"]);
 
   return (
     <section ref={containerRef} className="relative bg-[#020617] py-32 overflow-hidden">
@@ -183,8 +189,8 @@ const Timeline: React.FC = () => {
             <div className="absolute top-0 bottom-0 left-[27px] w-[1px] bg-white/5 md:left-1/2 -translate-x-1/2" />
 
             <motion.div
-                style={{ scaleY, originY: 0 }}
-                className="absolute top-0 bottom-0 left-[27px] w-[1px] bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] md:left-1/2 -translate-x-1/2 z-0"
+                style={{ scaleY, originY: 0, backgroundColor: beamColor }}
+                className="absolute top-0 bottom-0 left-[27px] w-[2px] shadow-[0_0_15px_currentColor] md:left-1/2 -translate-x-1/2 z-0"
             />
 
             <div className="relative z-10 flex flex-col gap-20">
