@@ -51,82 +51,140 @@ const Hero: React.FC = () => {
       {/* FOREGROUND CONTENT */}
       <motion.div
         style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative z-20 container mx-auto px-6 py-4 text-center lg:py-0"
+        className="relative z-20 container mx-auto grid grid-cols-1 items-center gap-12 px-6 py-4 lg:grid-cols-2 lg:py-0"
       >
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="glass mt-[10vh] mb-8 inline-flex items-center gap-2 rounded-full border border-blue-400/20 px-4 py-2 text-[8px] font-bold tracking-[0.2em] text-blue-400 uppercase shadow-2xl shadow-blue-500/10 sm:text-[10px] sm:tracking-[0.3em] md:px-6 md:py-2.5 md:text-xs lg:mt-0"
-        >
-          <Sparkles size={14} className="animate-pulse text-blue-300" />
-          The Future of Innovation Starts Here
-        </motion.div>
+        {/* LEFT COLUMN: TEXT */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="glass mt-[10vh] mb-8 inline-flex items-center gap-2 rounded-full border border-blue-400/20 px-4 py-2 text-[8px] font-bold tracking-[0.2em] text-blue-400 uppercase shadow-2xl shadow-blue-500/10 sm:text-[10px] sm:tracking-[0.3em] md:px-6 md:py-2.5 md:text-xs lg:mt-0"
+            >
+            <Sparkles size={14} className="animate-pulse text-blue-300" />
+            The Future of Innovation Starts Here
+            </motion.div>
 
-        <motion.div
-          style={{
-            transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
-          }}
-          className="perspective-2000 relative transition-transform duration-100 ease-out will-change-transform"
-        >
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.9, rotateX: 20 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-2 text-[clamp(3rem,18vw,12rem)] leading-none font-black tracking-tighter text-white drop-shadow-[0_0_80px_rgba(37,99,235,0.2)] selection:bg-blue-500/30 sm:text-[clamp(5rem,20vw,14rem)] md:text-[clamp(6rem,21vw,16rem)]"
-          >
-            E-CELL
-          </motion.h1>
+            <motion.div
+            style={{
+                transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
+            }}
+            className="perspective-2000 relative transition-transform duration-100 ease-out will-change-transform"
+            >
+            <motion.h1
+                initial={{ opacity: 0, scale: 0.9, rotateX: 20 }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-2 text-[clamp(3rem,10vw,8rem)] leading-none font-black tracking-tighter text-white drop-shadow-[0_0_80px_rgba(37,99,235,0.2)] selection:bg-blue-500/30"
+            >
+                E-CELL
+            </motion.h1>
 
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 2.5, delay: 0.5, ease: "circOut" }}
-            className="absolute -bottom-6 left-1/2 mx-auto h-[2px] w-full max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-60"
-          />
-        </motion.div>
+            <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 2.5, delay: 0.5, ease: "circOut" }}
+                className="absolute -bottom-6 left-1/2 mx-auto h-[2px] w-full max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-60 lg:left-0 lg:translate-x-0"
+            />
+            </motion.div>
 
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 mb-8 text-sm font-light tracking-[0.3em] text-gray-400/80 uppercase sm:mt-12 sm:mb-12 sm:text-xl sm:tracking-[0.5em] md:mt-16 md:text-2xl lg:text-4xl"
-        >
-          Entrepreneurship Cell{" "}
-          <span className="font-extrabold tracking-tight text-blue-500">
-            NIT SILCHAR
-          </span>
-        </motion.h2>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="mx-auto min-h-[4rem] max-w-4xl px-4 text-base leading-relaxed font-light text-gray-300/60 sm:min-h-[5rem] sm:text-xl md:text-2xl"
-        >
-          <TypingAnimation />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-16 flex flex-col items-center justify-center gap-6 sm:flex-row"
-        >
-          <button className="group relative overflow-hidden rounded-2xl bg-blue-600 px-8 py-3 shadow-[0_25px_60px_rgba(37,99,235,0.4)] transition-all hover:scale-105 active:scale-95 sm:px-14 sm:py-6">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <span className="relative z-10 flex items-center gap-2 text-sm font-black tracking-wide text-white sm:gap-3 sm:text-lg">
-              Our Initiatives{" "}
-              <span className="transition-transform duration-300 group-hover:translate-x-2">
-                →
-              </span>
+            <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="mt-8 mb-8 text-sm font-light tracking-[0.3em] text-gray-400/80 uppercase sm:mt-12 sm:mb-12 sm:text-xl sm:tracking-[0.5em] md:mt-16 md:text-2xl lg:text-3xl"
+            >
+            Entrepreneurship Cell{" "}
+            <span className="block pt-2 font-extrabold tracking-tight text-blue-500 sm:inline sm:pt-0">
+                NIT SILCHAR
             </span>
-          </button>
+            </motion.h2>
 
-          <button className="group glass rounded-2xl border border-white/10 px-8 py-3 text-sm font-bold text-white transition-all hover:scale-105 hover:border-white/20 hover:bg-white/5 active:scale-95 sm:px-14 sm:py-6 sm:text-lg">
-            Join Us
-          </button>
-        </motion.div>
+            <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="min-h-[4rem] max-w-2xl text-base leading-relaxed font-light text-gray-300/60 sm:min-h-[5rem] sm:text-xl md:text-2xl"
+            >
+            <TypingAnimation />
+            </motion.div>
+
+            <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+            className="mt-12 flex flex-col gap-6 sm:flex-row"
+            >
+            <button className="group relative overflow-hidden rounded-2xl bg-blue-600 px-8 py-3 shadow-[0_25px_60px_rgba(37,99,235,0.4)] transition-all hover:scale-105 active:scale-95 sm:px-14 sm:py-6">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <span className="relative z-10 flex items-center gap-2 text-sm font-black tracking-wide text-white sm:gap-3 sm:text-lg">
+                Our Initiatives{" "}
+                <span className="transition-transform duration-300 group-hover:translate-x-2">
+                    →
+                </span>
+                </span>
+            </button>
+
+            <button className="group glass rounded-2xl border border-white/10 px-8 py-3 text-sm font-bold text-white transition-all hover:scale-105 hover:border-white/20 hover:bg-white/5 active:scale-95 sm:px-14 sm:py-6 sm:text-lg">
+                Join Us
+            </button>
+            </motion.div>
+        </div>
+
+        {/* RIGHT COLUMN: BENTO GRID PLACEHOLDERS */}
+        <div className="relative h-[600px] w-full hidden lg:block">
+            <div className="grid h-full grid-cols-3 grid-rows-3 gap-4">
+                 {/* Item 1: Large Vertical */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.5, duration: 0.5 }}
+                  className="glass col-span-2 row-span-2 flex items-center justify-center rounded-3xl border border-white/10 bg-blue-500/10"
+                >
+                   <span className="text-blue-500/30 font-black text-6xl">IMG 1</span>
+                </motion.div>
+
+                {/* Item 2: Top Right */}
+                <motion.div
+                   initial={{ opacity: 0, scale: 0.8 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ delay: 1.7, duration: 0.5 }}
+                   className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-purple-500/10"
+                >
+                   <span className="text-purple-500/30 font-black text-2xl">IMG 2</span>
+                </motion.div>
+
+                {/* Item 3: Middle Right */}
+                <motion.div
+                   initial={{ opacity: 0, scale: 0.8 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ delay: 1.9, duration: 0.5 }}
+                   className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-cyan-500/10"
+                >
+                   <span className="text-cyan-500/30 font-black text-2xl">IMG 3</span>
+                </motion.div>
+
+                {/* Item 4: Bottom Left Wide */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 2.1, duration: 0.5 }}
+                    className="glass col-span-2 flex items-center justify-center rounded-3xl border border-white/10 bg-emerald-500/10"
+                >
+                    <span className="text-emerald-500/30 font-black text-4xl">IMG 4</span>
+                </motion.div>
+
+                 {/* Item 5: Bottom Right */}
+                 <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 2.3, duration: 0.5 }}
+                    className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-pink-500/10"
+                >
+                    <span className="text-pink-500/30 font-black text-2xl">IMG 5</span>
+                </motion.div>
+            </div>
+        </div>
       </motion.div>
     </section>
   );
