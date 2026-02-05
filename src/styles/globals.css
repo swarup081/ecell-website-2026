@@ -203,6 +203,11 @@
     @apply border-white/10;
   }
 
+  .mask-linear-fade {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
   body {
     @apply bg-[--color-background] text-[--color-foreground] antialiased;
     font-feature-settings:

@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, TrendingUp, Users, Activity, Globe, Code } from "lucide-react";
 
 const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -26,17 +26,20 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden lg:pt-32 xl:pt-0">
+    <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden lg:pt-32 xl:pt-0 bg-[#020617]">
       {/* 4. GRID LAYER: Structural Grid */}
       <div
         style={{
           transform: `translate(${mousePos.x}px, ${mousePos.y}px)`,
-          backgroundImage: `radial-gradient(circle, #3b82f6 0.5px, transparent 0.5px)`,
-          backgroundSize: "60px 60px",
+          backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
           transition: "transform 0.1s ease-out",
         }}
-        className="pointer-events-none absolute inset-0 z-0 opacity-20 will-change-transform"
-      />
+        className="pointer-events-none absolute inset-0 z-0 opacity-30 will-change-transform"
+      >
+          {/* Radial mask to fade out grid at edges */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_80%)]" />
+      </div>
 
       {/* 5. MID LAYER: Interactive Stardust (CSS implementation) */}
       <div className="pointer-events-none absolute inset-[-5%] z-0">
@@ -131,57 +134,110 @@ const Hero: React.FC = () => {
             </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: BENTO GRID PLACEHOLDERS */}
-        <div className="relative h-[600px] w-full hidden lg:block">
-            <div className="grid h-full grid-cols-3 grid-rows-3 gap-4">
-                 {/* Item 1: Large Vertical */}
+        {/* RIGHT COLUMN: BENTO GRID */}
+        <div className="relative h-[600px] w-full hidden lg:block perspective-1000">
+            <div className="grid h-full grid-cols-3 grid-rows-3 gap-4 p-4">
+                 {/* Item 1: Growth Chart (Large Vertical) */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.5, duration: 0.5 }}
-                  className="glass col-span-2 row-span-2 flex items-center justify-center rounded-3xl border border-white/10 bg-blue-500/10"
+                  whileHover={{ scale: 1.02 }}
+                  className="glass col-span-2 row-span-2 relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 p-6 shadow-2xl"
                 >
-                   <span className="text-blue-500/30 font-black text-6xl">IMG 1</span>
+                   <div className="flex items-center gap-2 mb-4">
+                      <div className="p-2 rounded-lg bg-blue-500/20">
+                          <TrendingUp size={20} className="text-blue-400" />
+                      </div>
+                      <span className="text-sm font-bold text-gray-300">Startup Growth</span>
+                   </div>
+                   {/* Mock Chart */}
+                   <div className="flex items-end justify-between h-full pb-8 gap-2">
+                      {[40, 65, 50, 80, 60, 95, 85].map((h, i) => (
+                          <motion.div
+                             key={i}
+                             initial={{ height: 0 }}
+                             animate={{ height: `${h}%` }}
+                             transition={{ duration: 1, delay: 1.5 + (i * 0.1), ease: "backOut" }}
+                             className="w-full bg-blue-500/30 rounded-t-sm relative group"
+                          >
+                              <div className="absolute inset-x-0 bottom-0 h-full bg-blue-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+                          </motion.div>
+                      ))}
+                   </div>
                 </motion.div>
 
-                {/* Item 2: Top Right */}
+                {/* Item 2: User Notification (Top Right) */}
                 <motion.div
                    initial={{ opacity: 0, scale: 0.8 }}
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ delay: 1.7, duration: 0.5 }}
-                   className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-purple-500/10"
+                   whileHover={{ scale: 1.02 }}
+                   className="glass flex flex-col justify-between rounded-3xl border border-white/10 bg-purple-500/10 p-5"
                 >
-                   <span className="text-purple-500/30 font-black text-2xl">IMG 2</span>
+                   <div className="flex justify-between items-start">
+                       <div className="p-2 rounded-full bg-purple-500/20">
+                          <Users size={16} className="text-purple-400" />
+                       </div>
+                       <span className="text-[10px] font-mono text-purple-300">NOW</span>
+                   </div>
+                   <div>
+                       <div className="text-2xl font-bold text-white">500+</div>
+                       <div className="text-xs text-purple-200/60">Active Members</div>
+                   </div>
                 </motion.div>
 
-                {/* Item 3: Middle Right */}
+                {/* Item 3: Activity Globe (Middle Right) */}
                 <motion.div
                    initial={{ opacity: 0, scale: 0.8 }}
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ delay: 1.9, duration: 0.5 }}
-                   className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-cyan-500/10"
+                   whileHover={{ scale: 1.02 }}
+                   className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-cyan-500/10 relative overflow-hidden"
                 >
-                   <span className="text-cyan-500/30 font-black text-2xl">IMG 3</span>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-30">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        >
+                             <Globe size={120} className="text-cyan-400" />
+                        </motion.div>
+                    </div>
+                    <div className="relative z-10 text-center">
+                        <Activity size={24} className="text-cyan-400 mx-auto mb-1 animate-pulse" />
+                        <span className="text-xs font-bold text-cyan-200">Global Reach</span>
+                    </div>
                 </motion.div>
 
-                {/* Item 4: Bottom Left Wide */}
+                {/* Item 4: Terminal Snippet (Bottom Left Wide) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 2.1, duration: 0.5 }}
-                    className="glass col-span-2 flex items-center justify-center rounded-3xl border border-white/10 bg-emerald-500/10"
+                    whileHover={{ scale: 1.02 }}
+                    className="glass col-span-2 flex flex-col justify-center rounded-3xl border border-white/10 bg-[#0d1117] p-6 font-mono text-xs overflow-hidden"
                 >
-                    <span className="text-emerald-500/30 font-black text-4xl">IMG 4</span>
+                    <div className="flex gap-1.5 mb-3">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                    </div>
+                    <div className="space-y-1 text-gray-400">
+                        <p><span className="text-pink-400">const</span> <span className="text-blue-400">success</span> = <span className="text-yellow-300">await</span> <span className="text-purple-400">eCell</span>.launch();</p>
+                        <p><span className="text-green-400">✔</span> Startup incubated successfully</p>
+                        <p className="animate-pulse">_</p>
+                    </div>
                 </motion.div>
 
-                 {/* Item 5: Bottom Right */}
+                 {/* Item 5: Code Icon (Bottom Right) */}
                  <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 2.3, duration: 0.5 }}
+                    whileHover={{ scale: 1.02 }}
                     className="glass flex items-center justify-center rounded-3xl border border-white/10 bg-pink-500/10"
                 >
-                    <span className="text-pink-500/30 font-black text-2xl">IMG 5</span>
+                    <Code size={32} className="text-pink-400" />
                 </motion.div>
             </div>
         </div>

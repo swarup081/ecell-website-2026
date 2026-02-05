@@ -2,44 +2,111 @@
 // @ts-nocheck
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Quote, User } from "lucide-react";
 
-const testimonialsData = [
+interface TestimonialItem {
+    id: number;
+    name: string;
+    role: string;
+    image: string;
+    text: string;
+}
+
+const testimonialsData: TestimonialItem[] = [
   {
     id: 1,
     name: "Mayank Yadav",
     role: "Senior Director (Products) @ Turing",
     image:
       "https://res.cloudinary.com/dp92qug2f/image/upload/v1678340666/Ecell%20website/testimonial/mayank_webp_khudax.webp",
-    text: "It was nostalgic to see NIT Silchar students and faculty. I really enjoyed the candid conversation with students and the energy in the room to do something big. Would love to come back soon and work towards building a solid entrepreneurial ecosystem in the campus.",
+    text: "It was nostalgic to see NIT Silchar students and faculty. I really enjoyed the candid conversation with students and the energy in the room to do something big.",
   },
   {
     id: 2,
     name: "Rohan Das",
     role: "Founder @ TechSolutions",
     image: "",
-    text: "E-Cell NITS provided me with the mentorship and network I needed to take my startup from an idea to a funded reality. The ecosystem here is thriving and genuinely supportive of new ideas.",
+    text: "E-Cell NITS provided me with the mentorship and network I needed to take my startup from an idea to a funded reality. The ecosystem here is thriving.",
   },
   {
     id: 3,
     name: "Priya Sharma",
     role: "Product Manager @ Google",
     image: "",
-    text: "The events and workshops are top-notch. It's the best place to learn about entrepreneurship in the region. The team's dedication to fostering innovation is truly inspiring.",
+    text: "The events and workshops are top-notch. It's the best place to learn about entrepreneurship in the region. The team's dedication is inspiring.",
   },
   {
     id: 4,
     name: "Arun Verma",
     role: "CTO @ InnovateX",
     image: "",
-    text: "Being part of E-Cell events has been a highlight of my college life. The exposure to real-world business problems and the opportunity to solve them is invaluable.",
+    text: "Being part of E-Cell events has been a highlight of my college life. The exposure to real-world business problems is invaluable.",
   },
 ];
 
-// Duplicate data for infinite scroll
+// Duplicate data for infinite scroll (4 sets)
 const marqueeData = [...testimonialsData, ...testimonialsData, ...testimonialsData, ...testimonialsData];
+
+const TestimonialCard: React.FC<{ item: TestimonialItem }> = ({ item }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+
+    return (
+        <div
+           ref={cardRef}
+           onMouseMove={handleMouseMove}
+           className="glass group relative w-[350px] flex-shrink-0 rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:border-blue-500/30 hover:bg-[#0d1117]/60 overflow-hidden"
+        >
+             {/* Spotlight Effect */}
+             <div
+               className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+               style={{
+                   background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(59, 130, 246, 0.1), transparent 40%)`,
+               }}
+             />
+
+             <Quote className="mb-6 text-blue-500/50" size={32} />
+
+             <p className="mb-8 min-h-[80px] text-sm leading-relaxed font-light text-gray-300 italic md:text-base">
+                &quot;{item.text}&quot;
+             </p>
+
+             <div className="flex items-center gap-4 border-t border-white/5 pt-6 relative z-10">
+                <div className="h-10 w-10 overflow-hidden rounded-full border border-blue-500/20 bg-gray-900">
+                  {item.image ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-800">
+                        <User size={16} className="text-blue-400" />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">{item.name}</h4>
+                  <p className="text-[10px] font-medium text-blue-400 uppercase tracking-wider">
+                    {item.role}
+                  </p>
+                </div>
+              </div>
+        </div>
+    )
+}
 
 const Testimonials: React.FC = () => {
   return (
@@ -62,50 +129,15 @@ const Testimonials: React.FC = () => {
         <motion.div
           animate={{ x: "-50%" }}
           transition={{
-            duration: 40,
+            duration: 60,
             repeat: Infinity,
             ease: "linear",
           }}
-          className="flex gap-8 px-4"
+          className="flex gap-6 px-4"
           style={{ width: "max-content" }}
         >
           {marqueeData.map((item, idx) => (
-            <div
-              key={`${item.id}-${idx}`}
-              className="glass group relative w-[350px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:border-blue-500/30 hover:bg-white/10 md:w-[450px]"
-            >
-               {/* Hover Glow Effect */}
-              <div className="absolute inset-0 -z-10 rounded-3xl bg-blue-600/0 blur-xl transition-colors duration-500 group-hover:bg-blue-600/5" />
-
-              <Quote className="mb-6 text-blue-500/50" size={40} />
-
-              <p className="mb-8 min-h-[120px] text-base leading-relaxed font-light text-gray-300 italic md:text-lg">
-                &quot;{item.text}&quot;
-              </p>
-
-              <div className="flex items-center gap-4 border-t border-white/5 pt-6">
-                <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-blue-500/20 bg-gray-900">
-                  {item.image ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gray-800">
-                        <User size={20} className="text-blue-400" />
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <h4 className="font-bold text-white">{item.name}</h4>
-                  <p className="text-xs font-medium text-blue-400 uppercase tracking-wider">
-                    {item.role}
-                  </p>
-                </div>
-              </div>
-            </div>
+             <TestimonialCard key={`${item.id}-${idx}`} item={item} />
           ))}
         </motion.div>
       </div>

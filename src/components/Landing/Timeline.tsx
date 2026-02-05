@@ -13,6 +13,7 @@ const timelineData = [
     icon: Users,
     desc: "Welcoming the new batches and introducing the entrepreneurial world of NIT Silchar.",
     color: "from-blue-500 to-cyan-400",
+    text_color: "text-blue-400"
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const timelineData = [
     icon: Target,
     desc: "The annual Entrepreneurship & Innovation Challenge that tests grit and creativity.",
     color: "from-purple-500 to-indigo-400",
+    text_color: "text-purple-400"
   },
   {
     id: 3,
@@ -27,6 +29,7 @@ const timelineData = [
     icon: Lightbulb,
     desc: "Our flagship summit featuring speakers, workshops, and networking with industry titans.",
     color: "from-amber-500 to-orange-400",
+    text_color: "text-amber-400"
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ const timelineData = [
     icon: Rocket,
     desc: "The module where startups pitch, compete, and gain visibility within the regional ecosystem.",
     color: "from-emerald-500 to-teal-400",
+    text_color: "text-emerald-400"
   },
   {
     id: 5,
@@ -41,6 +45,7 @@ const timelineData = [
     icon: TrendingUp,
     desc: "Full support for pre-selected startups through IIC to scale their business models.",
     color: "from-rose-500 to-pink-400",
+    text_color: "text-rose-400"
   },
 ];
 
@@ -60,7 +65,7 @@ const Timeline: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative overflow-hidden bg-gray-950/20 py-40"
+      className="relative overflow-hidden bg-[#020617] py-40"
     >
       <div className="container mx-auto px-6">
         <div className="mb-24 text-center">
@@ -73,7 +78,7 @@ const Timeline: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto max-w-4xl">
+        <div className="relative mx-auto max-w-5xl">
           {/* Vertical line background */}
           <div className="absolute top-0 bottom-0 left-[39px] w-[2px] -translate-x-1/2 bg-white/5 md:left-1/2" />
 
@@ -84,47 +89,52 @@ const Timeline: React.FC = () => {
           />
 
           <div className="relative z-20 flex flex-col gap-24">
-            {timelineData.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className={`flex items-center gap-10 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
-              >
-                {/* Content Side */}
-                <div className="group flex-1 md:pr-20 md:text-right">
-                  <div
-                    className={`glass rounded-3xl border border-white/5 p-8 transition-all duration-500 group-hover:border-blue-500/20 group-hover:bg-white/5 ${i % 2 !== 0 ? "md:pr-8 md:pl-20 md:text-left" : ""}`}
-                  >
-                    <h4 className="mb-3 text-2xl font-black text-white">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm leading-relaxed text-gray-400">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
+            {timelineData.map((item, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className={`flex items-center gap-10 md:gap-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
+                >
+                  {/* Content Side */}
+                  <div className={`flex-1 ${isEven ? "md:text-right md:pr-16" : "md:text-left md:pl-16"} pl-20 md:pl-0`}>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="glass group relative overflow-hidden rounded-3xl border border-white/5 p-8 transition-all duration-300 hover:border-white/10 hover:bg-white/5"
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 transition-opacity duration-500 group-hover:opacity-5`} />
 
-                {/* Icon Circle */}
-                <div className="glass relative z-30 flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/10 bg-gray-900 shadow-2xl transition-transform group-hover:scale-110">
-                  <div
-                    className={`absolute inset-1 rounded-full bg-gradient-to-br ${item.color} opacity-10 transition-opacity group-hover:opacity-20`}
-                  />
-                  <item.icon
-                    className="text-gray-300 transition-colors group-hover:text-white"
-                    size={30}
-                  />
-                  <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
-                    0{i + 1}
+                      <h4 className={`mb-3 text-2xl font-black ${item.text_color}`}>
+                        {item.title}
+                      </h4>
+                      <p className="text-sm leading-relaxed text-gray-400">
+                        {item.desc}
+                      </p>
+                    </motion.div>
                   </div>
-                </div>
 
-                {/* Empty Side for Desktop alignment */}
-                <div className="hidden flex-1 pl-20 md:flex" />
-              </motion.div>
-            ))}
+                  {/* Center Icon */}
+                  <div className="absolute left-[39px] md:relative md:left-auto flex-shrink-0 z-30">
+                     <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-4 border-[#020617] bg-[#0d1117] shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                        <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-20`} />
+                        <item.icon className="text-white relative z-10" size={28} />
+
+                        {/* Number Badge */}
+                        <div className={`absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${item.color} text-xs font-bold text-white shadow-lg border-2 border-[#020617]`}>
+                            {i + 1}
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Empty Side for Desktop alignment */}
+                  <div className="hidden flex-1 md:block" />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

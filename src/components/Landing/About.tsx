@@ -10,7 +10,7 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
-import { ArrowRight, Activity } from "lucide-react";
+import { ArrowRight, Activity, Rocket } from "lucide-react";
 
 const StatCounter: React.FC<{
   value: number;
@@ -155,7 +155,7 @@ const About: React.FC = () => {
             </motion.button>
           </motion.div>
 
-          {/* INTERACTIVE IMAGE CARD */}
+          {/* INTERACTIVE IMAGE CARD (Browser Window Style) */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -176,13 +176,47 @@ const About: React.FC = () => {
               }}
               className="relative mx-auto aspect-[4/5] w-full max-w-md md:aspect-square"
             >
-              {/* Main Image Placeholder Glass Container */}
-              <div className="glass group absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white/10 p-3 shadow-2xl md:rounded-[3rem] md:p-4 bg-gray-900/50">
-                <div className="pointer-events-none absolute inset-0 z-10 bg-blue-500/5 transition-colors group-hover:bg-blue-500/0" />
+              {/* Main Container */}
+              <div className="glass group absolute inset-0 overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#0d1117]/80 backdrop-blur-xl">
+                 {/* Window Header */}
+                 <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    <div className="ml-4 h-4 w-32 rounded-full bg-white/10" />
+                 </div>
 
-                {/* Placeholder Image Div */}
-                <div className="h-full w-full rounded-[1.8rem] bg-gradient-to-br from-gray-800 to-gray-900 md:rounded-[2.2rem] flex items-center justify-center">
-                    <span className="text-gray-700 font-bold text-4xl">IMAGE</span>
+                {/* Window Content: Abstract Map */}
+                <div className="relative h-full w-full p-6 flex flex-col items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
+
+                    {/* Central Hub */}
+                    <div className="relative z-10 flex flex-col items-center">
+                        <motion.div
+                          animate={{ boxShadow: ["0 0 20px rgba(59,130,246,0)", "0 0 40px rgba(59,130,246,0.3)", "0 0 20px rgba(59,130,246,0)"] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                          className="w-24 h-24 rounded-full border border-blue-500/30 flex items-center justify-center bg-blue-900/20 backdrop-blur-sm"
+                        >
+                            <Rocket size={40} className="text-blue-400" />
+                        </motion.div>
+                        <div className="h-20 w-[1px] bg-gradient-to-b from-blue-500/50 to-transparent my-4" />
+                        <div className="text-center">
+                            <h3 className="text-xl font-bold text-white">Launchpad</h3>
+                            <p className="text-xs text-blue-300/60 uppercase tracking-widest">Incubation Center</p>
+                        </div>
+                    </div>
+
+                    {/* Orbiting Elements */}
+                    <motion.div
+                       animate={{ rotate: 360 }}
+                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                       className="absolute inset-0 z-0 pointer-events-none"
+                    >
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full border border-dashed border-white/5" />
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px]">
+                              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7]" />
+                         </div>
+                    </motion.div>
                 </div>
               </div>
 
@@ -191,7 +225,7 @@ const About: React.FC = () => {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                 style={{ translateZ: "-30px" }}
-                className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full border-2 border-dashed border-blue-500/15 md:-bottom-20 md:-left-20 md:h-64 md:w-64"
+                className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full border-2 border-dashed border-blue-500/15 md:-bottom-20 md:-left-20 md:h-64 md:w-64 opacity-50"
               />
 
               {/* Floating Element: Stats Box (Slide In from Right) */}
@@ -201,11 +235,11 @@ const About: React.FC = () => {
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.5, type: "spring" }}
-                className="glass absolute -right-4 bottom-8 z-20 rounded-2xl border border-white/10 px-6 py-5 shadow-2xl md:-right-10 md:bottom-10 md:rounded-3xl"
+                className="glass absolute -right-4 bottom-8 z-20 rounded-2xl border border-white/20 bg-[#020617]/60 backdrop-blur-xl px-6 py-5 shadow-2xl md:-right-10 md:bottom-10 md:rounded-3xl"
               >
-                  <div className="flex gap-8">
+                  <div className="flex gap-8 items-center">
                     <StatCounter value={50} label="Active Startups" suffix="+" />
-                    <div className="w-[1px] bg-white/10"></div>
+                    <div className="w-[1px] h-8 bg-white/10"></div>
                     <StatCounter value={20} label="Global Partners" suffix="+" />
                   </div>
               </motion.div>
