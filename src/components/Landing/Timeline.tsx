@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Rocket, Target, Lightbulb, TrendingUp, Users } from "lucide-react";
 
 interface TimelineItem {
@@ -61,10 +59,10 @@ const timelineData: TimelineItem[] = [
 const TimelineCard = ({ item, index }: { item: TimelineItem; index: number }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 80, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: index * 0.1, type: "spring", stiffness: 50 }}
+            transition={{ duration: 0.6, delay: index * 0.1, type: "spring", bounce: 0.4 }}
             className="relative pl-8 md:pl-0"
         >
             {/* Connector Line (Mobile) */}
@@ -72,7 +70,7 @@ const TimelineCard = ({ item, index }: { item: TimelineItem; index: number }) =>
                 <div className="absolute top-8 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full border-2 border-[#020617]" style={{ backgroundColor: item.color }} />
             </div>
 
-            <div className="glass group relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:bg-[#0d1117]/60 hover:border-white/10 hover:shadow-2xl">
+            <div className="glass group relative overflow-hidden rounded-[2rem] border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:bg-[#0d1117]/60 hover:border-white/10 hover:shadow-2xl">
                 {/* Hover Gradient Background */}
                 <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
@@ -81,7 +79,7 @@ const TimelineCard = ({ item, index }: { item: TimelineItem; index: number }) =>
 
                 <div className="relative z-10 flex flex-col gap-6">
                     <div className="flex items-center justify-between">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/5 group-hover:scale-110 transition-transform duration-300">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/5 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <item.icon size={24} style={{ color: item.color }} />
                         </div>
                         <span className="text-xs font-mono font-bold uppercase tracking-widest text-gray-500">{item.date}</span>
@@ -141,7 +139,7 @@ const Timeline: React.FC = () => {
             </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {timelineData.map((item, i) => (
                 <TimelineCard key={item.id} item={item} index={i} />
             ))}

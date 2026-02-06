@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Poppins } from "next/font/google";
@@ -5,7 +6,7 @@ import Navbar from "../../components/Landing/Navbar";
 import Footer from "../../components/Landing/Footer";
 import Background from "../../components/Landing/Background";
 import { motion } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],

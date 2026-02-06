@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @next/next/no-img-element */
 // @ts-nocheck
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TrendingUp, Users, Activity, Globe, LayoutDashboard, Shield, ArrowRight } from "lucide-react";
+import { ArrowRight, Globe } from "lucide-react";
 
 const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -88,81 +89,59 @@ const Hero: React.FC = () => {
            </div>
         </div>
 
-        {/* RIGHT COLUMN: STATIC BENTO GRID (Clean Slate) */}
+        {/* RIGHT COLUMN: IMAGE GRID */}
         <div className="relative h-[600px] w-full hidden lg:block">
             <div className="grid h-full grid-cols-3 grid-rows-3 gap-4 p-4">
 
-                 {/* Item 1: Growth Chart (Static) */}
-                <div className="glass col-span-2 row-span-2 relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-6 shadow-2xl backdrop-blur-xl transition-transform hover:scale-[1.01] duration-500">
-                   <div className="flex items-center gap-2 mb-6">
-                      <div className="p-2 rounded-lg bg-blue-500/20">
-                          <TrendingUp size={20} className="text-blue-400" />
-                      </div>
-                      <span className="text-sm font-bold text-gray-300">Startup Growth</span>
-                   </div>
-                   <div className="flex items-end justify-between h-[200px] pb-4 gap-3">
-                      {[30, 45, 35, 60, 50, 80, 70, 95].map((h, i) => (
-                          <div
-                             key={i}
-                             style={{ height: `${h}%` }}
-                             className="w-full bg-gradient-to-t from-blue-600/30 to-blue-400/30 rounded-t-md relative"
-                          >
-                              <div className="absolute top-0 inset-x-0 h-1 bg-blue-400/50" />
-                          </div>
-                      ))}
+                 {/* Item 1: Large Image */}
+                <div className="group relative col-span-2 row-span-2 overflow-hidden rounded-3xl border border-white/5 shadow-2xl transition-transform hover:scale-[1.01] duration-500">
+                   <img
+                     src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=1000"
+                     alt="Startup Team"
+                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/80 to-transparent opacity-60" />
+                   <div className="absolute bottom-4 left-4">
+                      <span className="text-xs font-bold text-white uppercase tracking-widest">Brainstorming</span>
                    </div>
                 </div>
 
-                {/* Item 2: User Notification (Static) */}
-                <div className="glass flex flex-col justify-between rounded-3xl border border-white/5 bg-[#0d1117]/40 p-5 backdrop-blur-xl transition-transform hover:scale-[1.02] duration-500">
-                   <div className="flex justify-between items-start">
-                       <div className="p-2 rounded-full bg-purple-500/20">
-                          <Users size={16} className="text-purple-400" />
-                       </div>
-                       <div className="h-2 w-2 rounded-full bg-purple-500" />
-                   </div>
-                   <div className="mt-4">
-                       <div className="text-3xl font-black text-white">500+</div>
-                       <div className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">Active Members</div>
-                   </div>
+                {/* Item 2: Small Image */}
+                <div className="group relative overflow-hidden rounded-3xl border border-white/5 shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                    <img
+                     src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=500"
+                     alt="Mentorship"
+                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
+                   <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay" />
                 </div>
 
-                {/* Item 3: Activity Globe (Static Placeholder) */}
-                <div className="glass flex items-center justify-center rounded-3xl border border-white/5 bg-[#0d1117]/40 relative overflow-hidden backdrop-blur-xl transition-transform hover:scale-[1.02] duration-500">
-                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                         <Globe size={120} className="text-cyan-400" />
-                    </div>
-                    <div className="relative z-10 text-center">
-                        <Activity size={24} className="text-cyan-400 mx-auto mb-1" />
-                        <span className="text-[10px] font-bold text-cyan-200 uppercase tracking-wider">Global Reach</span>
-                    </div>
+                {/* Item 3: Small Image */}
+                <div className="group relative overflow-hidden rounded-3xl border border-white/5 shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                    <img
+                     src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=500"
+                     alt="Networking"
+                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
                 </div>
 
-                {/* Item 4: Project Dashboard (Static) */}
-                <div className="glass col-span-2 flex flex-col justify-center rounded-3xl border border-white/5 bg-[#0a0f1c] p-6 overflow-hidden backdrop-blur-xl relative transition-transform hover:scale-[1.01] duration-500">
-                    <div className="absolute top-0 right-0 p-4 opacity-10">
-                        <LayoutDashboard size={60} />
-                    </div>
-
-                    <div className="flex flex-col gap-3 relative z-10">
-                        <div className="flex justify-between items-center mb-2">
-                             <div className="h-2 w-20 bg-gray-700 rounded-full" />
-                             <div className="h-2 w-8 bg-blue-500/50 rounded-full" />
-                        </div>
-                        <div className="flex gap-2">
-                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
-                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
-                             <div className="h-16 w-1/3 bg-white/5 rounded-lg border border-white/5" />
-                        </div>
-                    </div>
+                {/* Item 4: Wide Image */}
+                <div className="group relative col-span-2 overflow-hidden rounded-3xl border border-white/5 shadow-2xl transition-transform hover:scale-[1.01] duration-500">
+                    <img
+                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                     alt="Collaboration"
+                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
+                   <div className="absolute inset-0 bg-purple-600/10 mix-blend-overlay" />
                 </div>
 
-                 {/* Item 5: Shield Icon (Static) */}
-                 <div className="glass flex items-center justify-center rounded-3xl border border-white/5 bg-[#0d1117]/40 backdrop-blur-xl transition-transform hover:scale-[1.02] duration-500">
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-pink-500/20 blur-xl rounded-full" />
-                        <Shield size={32} className="text-pink-400 relative z-10" />
-                    </div>
+                 {/* Item 5: Small Image */}
+                 <div className="group relative overflow-hidden rounded-3xl border border-white/5 shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                    <img
+                     src="https://images.unsplash.com/photo-1553877616-15280ed54817?auto=format&fit=crop&q=80&w=500"
+                     alt="Future"
+                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
                 </div>
             </div>
         </div>

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -64,16 +62,19 @@ const Partners: React.FC = () => {
           {marqueeItems.map((partner, i) => (
             <div
               key={i}
-              className="group flex flex-col items-center gap-4 opacity-40 grayscale transition-all duration-500 hover:opacity-100 hover:grayscale-0 cursor-pointer"
+              className="group flex items-center gap-4 opacity-40 transition-all duration-500 hover:opacity-100 cursor-pointer"
             >
-              <div className="h-16 w-32 md:h-20 md:w-40 flex items-center justify-center">
+              <div className="h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full border border-white/10 bg-white/5 p-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={partner.url}
                     alt={partner.name}
-                    className="h-full w-full object-contain brightness-200 contrast-0 group-hover:brightness-100 group-hover:contrast-100 transition-all duration-500"
+                    className="h-full w-full object-contain"
                   />
               </div>
+              <span className="text-xl font-bold text-white/50 group-hover:text-white transition-colors uppercase tracking-widest">
+                {partner.name}
+              </span>
             </div>
           ))}
         </motion.div>

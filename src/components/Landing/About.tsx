@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -10,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
-import { ArrowRight, Activity, Rocket } from "lucide-react";
+import { ArrowRight, Activity } from "lucide-react";
 
 const StatCounter: React.FC<{
   value: number;
@@ -201,44 +199,23 @@ const About: React.FC = () => {
                  />
 
                  {/* Window Header (Minimal) */}
-                 <div className="flex items-center gap-2 px-6 py-5 border-b border-white/5 bg-white/[0.02]">
+                 <div className="absolute top-0 inset-x-0 z-20 flex items-center gap-2 px-6 py-5 border-b border-white/5 bg-black/20">
                     <div className="flex gap-2">
                         <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
                         <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
                     </div>
-                    <div className="ml-auto text-[10px] font-mono text-gray-600 uppercase">System Active</div>
+                    <div className="ml-auto text-[10px] font-mono text-gray-500 uppercase">System Active</div>
                  </div>
 
-                {/* Content: Abstract Map */}
-                <div className="relative h-full w-full p-6 flex flex-col items-center justify-center overflow-hidden">
-
-                    {/* Central Hub */}
-                    <div className="relative z-10 flex flex-col items-center">
-                        <motion.div
-                          animate={{
-                              boxShadow: ["0 0 20px rgba(59,130,246,0)", "0 0 40px rgba(59,130,246,0.2)", "0 0 20px rgba(59,130,246,0)"],
-                              scale: [1, 1.05, 1]
-                           }}
-                          transition={{ duration: 4, repeat: Infinity }}
-                          className="w-20 h-20 rounded-2xl border border-blue-500/20 flex items-center justify-center bg-blue-900/10 backdrop-blur-md rotate-45"
-                        >
-                            <Rocket size={32} className="text-blue-400 -rotate-45" />
-                        </motion.div>
-
-                        <div className="mt-8 text-center">
-                            <h3 className="text-2xl font-black text-white tracking-tight">Launchpad</h3>
-                            <p className="text-xs text-blue-400 font-mono mt-1">INCUBATION_PROTOCOL_V2</p>
-                        </div>
-                    </div>
-
-                    {/* Minimal Orbit */}
-                    <motion.div
-                       animate={{ rotate: 360 }}
-                       transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                       className="absolute inset-0 z-0 pointer-events-none"
-                    >
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full border border-dashed border-white/5" />
-                    </motion.div>
+                {/* Content: Image Placeholder */}
+                <div className="relative h-full w-full">
+                     {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=800"
+                        alt="About Us"
+                        className="h-full w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
                 </div>
               </div>
 
