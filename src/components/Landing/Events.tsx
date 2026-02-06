@@ -59,6 +59,8 @@ const EventCard = ({
     const cardRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
+    if (!event) return null;
+
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
@@ -67,6 +69,9 @@ const EventCard = ({
             y: e.clientY - rect.top,
         });
     };
+
+    const title = event.title || "Event";
+    const displayTitle = isMobile ? title.replace("\n", " ") : title;
 
     return (
         <motion.div
@@ -130,7 +135,7 @@ const EventCard = ({
                     <h3
                         className={`leading-none font-black tracking-tight text-white group-hover:text-blue-100 transition-colors ${isMobile ? "mb-2 text-2xl" : "mb-3 text-3xl"}`}
                     >
-                        {isMobile ? event.title.replace("\n", " ") : event.title}
+                        {displayTitle}
                     </h3>
 
                     <h4 className="mb-3 text-[10px] font-bold tracking-widest text-gray-400 uppercase">
@@ -161,11 +166,15 @@ const Events: React.FC = () => {
   const [currentEvent, setCurrentEvent] = useState(0);
 
   useEffect(() => {
+    if (!events.length) return;
     const timer = setInterval(() => {
       setCurrentEvent((prev) => (prev + 1) % events.length);
     }, 5000); // Rotate every 5 seconds
     return () => clearInterval(timer);
   }, []);
+
+  // Use nullish coalescing to prevent potential issues
+  const safeCurrentEvent = events[currentEvent] ?? events[0];
 
   return (
     <section
@@ -216,16 +225,18 @@ const Events: React.FC = () => {
         <div className="relative lg:hidden">
           <div className="min-h-[280px]">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={currentEvent}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.5 }}
-                className="w-full"
-              >
-                <EventCard event={event} isMobile={true} />
-              </motion.div>
+              {safeCurrentEvent && (
+                  <motion.div
+                    key={safeCurrentEvent.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full"
+                  >
+                    <EventCard event={safeCurrentEvent} isMobile={true} />
+                  </motion.div>
+              )}
             </AnimatePresence>
           </div>
 

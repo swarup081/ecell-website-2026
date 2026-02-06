@@ -2,8 +2,8 @@
 // @ts-nocheck
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Rocket, Target, Lightbulb, TrendingUp, Users } from "lucide-react";
 
 interface TimelineItem {
@@ -58,138 +58,93 @@ const timelineData: TimelineItem[] = [
   },
 ];
 
-const TimelineNode = ({ item, index, isEven }: { item: TimelineItem; index: number; isEven: boolean }) => {
-    const cardRef = useRef<HTMLDivElement>(null);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        setMousePos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        });
-    };
-
+const TimelineCard = ({ item, index }: { item: TimelineItem; index: number }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className={`relative flex items-center gap-12 md:gap-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
+            transition={{ duration: 0.8, delay: index * 0.1, type: "spring", stiffness: 50 }}
+            className="relative pl-8 md:pl-0"
         >
-            {/* Content Card */}
-            <div className={`flex-1 ${isEven ? "md:text-right md:pr-20" : "md:text-left md:pl-20"} pl-20 md:pl-0`}>
+            {/* Connector Line (Mobile) */}
+            <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white/5 md:hidden">
+                <div className="absolute top-8 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full border-2 border-[#020617]" style={{ backgroundColor: item.color }} />
+            </div>
+
+            <div className="glass group relative overflow-hidden rounded-3xl border border-white/5 bg-[#0d1117]/40 p-8 transition-all duration-500 hover:bg-[#0d1117]/60 hover:border-white/10 hover:shadow-2xl">
+                {/* Hover Gradient Background */}
                 <div
-                   ref={cardRef}
-                   onMouseMove={handleMouseMove}
-                   className="group relative"
-                >
-                    {/* Data Block Card Style */}
-                    <div className="glass relative overflow-hidden rounded-xl border border-white/10 bg-[#0d1117] p-1 transition-all duration-300 hover:border-white/20">
-                        {/* Inner Container */}
-                        <div className="relative rounded-lg bg-[#0a0d14] p-6 h-full">
-                             {/* Spotlight */}
-                            <div
-                                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 rounded-lg"
-                                style={{
-                                    background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.05), transparent 40%)`,
-                                }}
-                            />
+                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(to bottom right, ${item.color}, transparent)` }}
+                />
 
-                            {/* Color Accent Line */}
-                            <div className={`absolute top-0 bottom-0 w-1 ${isEven ? "right-0" : "left-0"}`} style={{ backgroundColor: item.color }} />
-
-                            <div className={`mb-2 text-[10px] font-mono font-bold uppercase tracking-widest text-gray-500`}>
-                                {item.date}
-                            </div>
-
-                            <h3 className="mb-2 text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                                {item.title}
-                            </h3>
-                            <p className="text-sm leading-relaxed text-gray-400">
-                                {item.desc}
-                            </p>
+                <div className="relative z-10 flex flex-col gap-6">
+                    <div className="flex items-center justify-between">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/5 group-hover:scale-110 transition-transform duration-300">
+                            <item.icon size={24} style={{ color: item.color }} />
                         </div>
+                        <span className="text-xs font-mono font-bold uppercase tracking-widest text-gray-500">{item.date}</span>
+                    </div>
+
+                    <div>
+                        <h3 className="mb-2 text-2xl font-black text-white">{item.title}</h3>
+                        <p className="text-sm leading-relaxed text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {item.desc}
+                        </p>
                     </div>
                 </div>
             </div>
-
-            {/* Central Node */}
-            <div className="absolute left-[18px] md:relative md:left-auto flex-shrink-0 z-30">
-                <div className="relative flex h-4 w-4 items-center justify-center">
-                     {/* Pulsing Dot */}
-                     <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        className="absolute inset-0 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                     />
-                     <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 2, opacity: 0 }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: index * 0.2 }}
-                        className="absolute inset-0 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                     />
-                     {/* Connector to Card */}
-                     <motion.div
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ delay: 0.3, duration: 0.5 }}
-                        style={{ originX: isEven ? 1 : 0 }}
-                        className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-[1px] w-20 bg-gradient-to-r from-transparent to-white/20 ${isEven ? "right-full" : "left-full"}`}
-                     >
-                         <div className={`absolute top-1/2 -translate-y-1/2 h-1 w-1 rounded-full bg-white/50 ${isEven ? "left-0" : "right-0"}`} />
-                     </motion.div>
-                </div>
-            </div>
-
-            {/* Spacer */}
-            <div className="hidden flex-1 md:block" />
         </motion.div>
-    );
+    )
 }
 
 const Timeline: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"],
+    offset: ["start start", "end end"],
   });
 
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const pathLength = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   return (
     <section ref={containerRef} className="relative bg-[#020617] py-32 overflow-hidden">
+
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 opacity-10">
+          <svg className="h-full w-full" preserveAspectRatio="none">
+              <motion.path
+                 d="M -100 200 Q 400 400 800 100 T 2000 300"
+                 stroke="url(#gradient)"
+                 strokeWidth="2"
+                 fill="none"
+                 style={{ pathLength }}
+              />
+              <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
+                      <stop offset="50%" stopColor="#8b5cf6" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#ec4899" stopOpacity="0" />
+                  </linearGradient>
+              </defs>
+          </svg>
+      </div>
+
       <div className="container relative z-10 mx-auto px-6">
-        {/* Header */}
-        <div className="mb-24 text-center">
+        <div className="mb-20 text-center">
             <h2 className="mb-6 text-4xl font-black tracking-tighter text-white uppercase md:text-6xl">
                 The Roadmap
             </h2>
-            <div className="mx-auto h-1 w-20 bg-blue-500 rounded-full" />
+            <p className="mx-auto max-w-xl text-gray-400 font-light">
+                Our strategic journey to foster innovation.
+            </p>
         </div>
 
-        <div className="relative mx-auto max-w-5xl">
-            {/* The Thin Line */}
-            <div className="absolute top-0 bottom-0 left-[25px] w-[1px] bg-white/5 md:left-1/2 -translate-x-1/2" />
-
-            <motion.div
-                style={{ scaleY, originY: 0 }}
-                className="absolute top-0 bottom-0 left-[25px] w-[1px] bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 md:left-1/2 -translate-x-1/2 z-0"
-            />
-
-            <div className="relative z-10 flex flex-col gap-16">
-                {timelineData.map((item, i) => (
-                    <TimelineNode key={item.id} item={item} index={i} isEven={i % 2 === 0} />
-                ))}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {timelineData.map((item, i) => (
+                <TimelineCard key={item.id} item={item} index={i} />
+            ))}
         </div>
       </div>
     </section>
